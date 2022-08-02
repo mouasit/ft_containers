@@ -1,13 +1,19 @@
-class myVector{
+template<class T, class myAlloc = std::allocator<T>>
+class Vector{
     public:
-        myVector();
-        void push_back(int item);
+        Vector();
+        void assign(int len, T value);
+        void push_back(T item);
         void pop_back();
         int operator[](int index);
         int size();
-    private:
-    int lenSize;
-    int *table;
-};
+        void reserve(int n);
+        
 
-std::ostream&	operator<<(std::ostream& cout, myVector & inst);
+
+
+    private:
+    int _size;
+    myAlloc myVector;
+    typename myAlloc::pointer pointer;
+};

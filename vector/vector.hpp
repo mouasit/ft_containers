@@ -16,8 +16,7 @@ namespace ft{
             typedef T       _type;
             typedef Alloc    _allocation_type;
             
-            Vector()
-                : _array(NULL), _size(0), _capacity(0){};
+            Vector() : _array(NULL), _size(0), _capacity(0){};
 
             Vector(const int len)
                 : _array(NULL), _size(0), _capacity(0){

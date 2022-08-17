@@ -3,6 +3,7 @@
 
 int main()
 {
+    /*
     ft::Vector<char> myVector(5);
     std::vector<char> vector(5);
 
@@ -34,6 +35,22 @@ int main()
 
     std::cout << "capacity() : " << vector.capacity();
 
-    std::cout << std::endl << std::endl;
+    std::cout << std::endl << std::endl;*/
+
+
+std::vector<int> myVector(2);
+
+myVector.resize(11);
+std::cout << "size: " << myVector.size() << std::endl;
+std::cout << "capacity: " << myVector.capacity() << std::endl;
+for (size_t i=0;i<myVector.size();i++)
+    std::cout << ' ' << myVector[i];
+std::cout << '\n';
+
+ft::vector<int> vector(2);
+
+vector.resize(11);
+std::cout << "size: " << vector.size() << std::endl;
+std::cout << "capacity: " << vector.capacity() << std::endl;
 
 }

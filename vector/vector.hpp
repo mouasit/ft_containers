@@ -7,23 +7,19 @@ namespace ft{
     
     template <typename T, typename Alloc = std::allocator<T> >
     class vector{
-        private:
-            Alloc  _allocation;
-            T*     _array;
-            size_t _size;
-            size_t _capacity;
         public:
             typedef T       value_type;
-            typedef Alloc    _allocation_type;
+            typedef Alloc    allocation_type;
+            typedef size_t   size_type;
     
             vector()
                 : _array(NULL), _size(0), _capacity(0){};
 
-            vector(const size_t len, const value_type val = value_type())
-                : _array(NULL), _size(len), _capacity(len){
+            vector(const size_type len, const allocation_type& alloc = allocation_type(), const value_type& val = value_type())
+                : _array(NULL),_allocation(alloc), _size(len), _capacity(len){
 
             this->_array = this->_allocation.allocate(len);
-            for (size_t i = 0; i < len; i++)
+            for (size_type i = 0; i < len; i++)
                 this->_allocation.construct(this->_array + i, val);
         };
             ~vector(){};
@@ -32,21 +28,72 @@ namespace ft{
             }
 
 
-            int size(){
+            size_type size(){
                 return this->_size;
             }
 
-            int capacity(){
+            size_type capacity(){
                 return this->_capacity;
             }
 
-            void resize (size_t n, value_type val = value_type())
+            void resize (size_type n, value_type val = value_type())
+            {
+                if(n < this->_size)
+                {
+                    for(size_type i = n; i < this->_size; i++)
+                        _allocation.destroy(this->_array + i);
+                }
+                else if (n > this->_size && n <= this->_capacity)
+                {
+                    std::cout << "val: " << val << std::endl;
+                    std::cout << "size: " << this->_size << std::endl;
+                    for (size_type i = this->_size; i < n; i++)
+                    {
+                        std::cout << "I'm in" << std::endl;
+                        _allocation.construct(this->_array + i, val);
+                    }
+                }
+                else if (n > this->_capacity)
+                {
+                    this->reserve(n);
+                    for (size_type i = this->_size; i < this->_capacity; i++)
+                        _allocation.construct(this->_array + i,val);
+                }
+                this->_size = n;
+            }
+
+            void reserve (size_type n)
+            {
+                T*  tmpArray;
+                size_type tmpCapacity = this->_capacity;
+
+                if (n > this->_capacity)
+                {
+                    tmpArray = this->_allocation.allocate(n);
+                    this->_capacity = n;
+
+                    for (size_type i = 0; i < this->_size; i++)
+                        _allocation.construct(tmpArray + i,this->_array[i]);
+                    
+                    for (size_type i = 0; i < this->_size; i++)
+                        _allocation.destroy(this->_array + i);
+                    _allocation.deallocate(this->_array, tmpCapacity);
+                    this->_array = tmpArray;
+                }
+            }
+/*
+            void resize (size_type n, value_type val = value_type())
             {
                 T* arrayTmp = this->_array;
-                size_t  doubleCapacity = this->_capacity * 2 ;
+                size_type  doubleCapacity = this->_capacity * 2 ;
 
                 this->_size = n;
+                if (n < this->size)
+                {
 
+                }
+
+                
                 if (n > this->_capacity)
                 {
                     if (n > doubleCapacity)
@@ -70,7 +117,7 @@ namespace ft{
                     }
                 }
 
-                for (size_t i = 0; i < n; i++)
+                for (size_type i = 0; i < n; i++)
                 {
                     if(arrayTmp[i])
                     {
@@ -79,7 +126,13 @@ namespace ft{
                     else
                         this->_array[i] = val;
                 }
-            }
+            }*/
+
+            private:
+                T*     _array;
+                Alloc  _allocation;
+                size_type _size;
+                size_type _capacity;
     };
 }
 

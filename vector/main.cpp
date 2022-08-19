@@ -37,20 +37,24 @@ int main()
 
     std::cout << std::endl << std::endl;*/
 
+      ft::vector<int> myvector(10);
 
-std::vector<int> myVector(2);
+  // set some initial content:
+  
+  std::cout << myvector.capacity() << std::endl;
+  myvector.resize(5);
+  myvector.resize(8,100);
+  myvector.resize(12);
 
-myVector.resize(11);
-std::cout << "size: " << myVector.size() << std::endl;
-std::cout << "capacity: " << myVector.capacity() << std::endl;
-for (size_t i=0;i<myVector.size();i++)
-    std::cout << ' ' << myVector[i];
-std::cout << '\n';
-
-ft::vector<int> vector(2);
-
-vector.resize(11);
-std::cout << "size: " << vector.size() << std::endl;
-std::cout << "capacity: " << vector.capacity() << std::endl;
-
+  std::cout << "myvector contains:";
+  for (size_t i=0;i<myvector.size();i++)
+    std::cout << ' ' << myvector[i];
+  std::cout << '\n';
+  /*
+  std::cout << myvector.capacity() << std::endl;
+    for (size_t i=0;i<myvector.capacity();i++)
+    std::cout << ' ' << myvector[i];
+  std::cout << '\n';
+  myvector.reserve(11);
+  std::cout << myvector.capacity() << std::endl;*/
 }

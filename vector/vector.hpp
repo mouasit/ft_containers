@@ -45,13 +45,8 @@ namespace ft{
                 }
                 else if (n > this->_size && n <= this->_capacity)
                 {
-                    std::cout << "val: " << val << std::endl;
-                    std::cout << "size: " << this->_size << std::endl;
                     for (size_type i = this->_size; i < n; i++)
-                    {
-                        std::cout << "I'm in" << std::endl;
                         _allocation.construct(this->_array + i, val);
-                    }
                 }
                 else if (n > this->_capacity)
                 {
@@ -80,6 +75,12 @@ namespace ft{
                     _allocation.deallocate(this->_array, tmpCapacity);
                     this->_array = tmpArray;
                 }
+            }
+
+            bool empty() const{
+                if (!this->_size)
+                    return true;
+                return false;
             }
 /*
             void resize (size_type n, value_type val = value_type())

@@ -40,8 +40,6 @@ int main()
       ft::vector<int> myvector(10);
 
   // set some initial content:
-  
-  std::cout << myvector.capacity() << std::endl;
   myvector.resize(5);
   myvector.resize(8,100);
   myvector.resize(12);

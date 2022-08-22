@@ -25,9 +25,6 @@ namespace ft{
                 this->_allocation.construct(this->_array + i, val);
         };
             ~vector(){};
-            T operator[](int index){
-                return this->_array[index];
-            }
 
             // CAPACITY 
 
@@ -96,17 +93,42 @@ namespace ft{
             }
 
             // ELEMENT ACCESS
+            
+             reference operator[] (size_type n){
+                return this->_array[n];
+            }
+            
+            const_reference operator[] (size_type n) const{
+                return this->_array[n];
+            }
 
-            reference at (size_type n){
+            reference at(size_type n){
                 if(n >= this->_size)
                     throw std::out_of_range("vector");
                 return this->_array[n];
             }
 
-            const_reference at (size_type n) const {
-
+            const_reference at(size_type n) const {
+                if(n >= this->_size)
+                    throw std::out_of_range("vector");
+                return this->_array[n];
             }
             
+            reference front(){
+                return this->_array[0];
+            }
+
+            const_reference front() const {
+                return this->_array[0];
+            }
+            
+            reference back(){
+                return this->_array[this->_size - 1];
+            }
+
+            const_reference back() const {
+                return this->_array[this->_size - 1];
+            }
 
             private:
                 T*     _array;

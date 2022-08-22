@@ -38,6 +38,7 @@ int main()
     std::cout << std::endl << std::endl;*/
 
       ft::vector<int> myvector(10);
+      std::cout << myvector.max_size() << std::endl;
 
   // set some initial content:
   myvector.resize(5);
@@ -48,6 +49,7 @@ int main()
   for (size_t i=0;i<myvector.size();i++)
     std::cout << ' ' << myvector[i];
   std::cout << '\n';
+
   /*
   std::cout << myvector.capacity() << std::endl;
     for (size_t i=0;i<myvector.capacity();i++)

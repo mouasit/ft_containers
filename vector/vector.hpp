@@ -82,6 +82,10 @@ namespace ft{
                     return true;
                 return false;
             }
+
+            size_type max_size() const{
+                return this->_allocation.max_size();
+            }
 /*
             void resize (size_type n, value_type val = value_type())
             {

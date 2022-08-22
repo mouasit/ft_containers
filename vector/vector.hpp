@@ -130,6 +130,25 @@ namespace ft{
                 return this->_array[this->_size - 1];
             }
 
+            // MODIFIERS
+
+            void push_back (const value_type& val){
+                size_type  doubleCapacity = this->_size * 2;
+
+                if (this->_size < this->_capacity)
+                {
+                    _allocation.construct(this->_array + this->_size - 1, val);
+                    this->_size++;
+                }
+                else{
+                    if (this->_capacity == 0)
+                        doubleCapacity = 1;
+                    this->reserve(doubleCapacity);
+                    _allocation.construct(this->_array + this->_size - 1, val);
+                    this->_size++;
+                }
+            }
+
             private:
                 T*     _array;
                 Alloc  _allocation;

@@ -38,6 +38,8 @@ namespace ft{
 
             void resize (size_type n, value_type val = value_type())
             {
+                size_type doubleCapacity = this->_size * 2;
+
                 if(n < this->_size)
                 {
                     for(size_type i = n; i < this->_size; i++)
@@ -50,7 +52,10 @@ namespace ft{
                 }
                 else if (n > this->_capacity)
                 {
-                    this->reserve(n);
+                    if (n > doubleCapacity)
+                        this->reserve(n);
+                    else
+                        this->reserve(doubleCapacity);
                     for (size_type i = this->_size; i < this->_capacity; i++)
                         _allocation.construct(this->_array + i,val);
                 }
@@ -86,52 +91,6 @@ namespace ft{
             size_type max_size() const{
                 return this->_allocation.max_size();
             }
-/*
-            void resize (size_type n, value_type val = value_type())
-            {
-                T* arrayTmp = this->_array;
-                size_type  doubleCapacity = this->_capacity * 2 ;
-
-                this->_size = n;
-                if (n < this->size)
-                {
-
-                }
-
-                
-                if (n > this->_capacity)
-                {
-                    if (n > doubleCapacity)
-                    {
-                        this->_array = this->_allocation.allocate(n);
-                        this->_capacity = n;
-                    }
-                    else
-                    {
-                        this->_array = this->_allocation.allocate(doubleCapacity);
-                        this->_capacity = doubleCapacity;
-                    }
-                }
-
-                else
-                {
-                    if (n == this->_capacity)
-                    {
-                        this->_array = this->_allocation.allocate(n);
-                        this->_capacity = n;
-                    }
-                }
-
-                for (size_type i = 0; i < n; i++)
-                {
-                    if(arrayTmp[i])
-                    {
-                        this->_array[i] = arrayTmp[i];
-                    }
-                    else
-                        this->_array[i] = val;
-                }
-            }*/
 
             private:
                 T*     _array;

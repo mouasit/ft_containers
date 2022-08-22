@@ -51,6 +51,8 @@ int main()
     std::cout << ' ' << myvector[i];
   std::cout << '\n';
 
+  std::cout << myvector.at(12) << std::endl;
+
   /*
   std::cout << myvector.capacity() << std::endl;
     for (size_t i=0;i<myvector.capacity();i++)

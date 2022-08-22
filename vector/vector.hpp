@@ -11,6 +11,8 @@ namespace ft{
             typedef T       value_type;
             typedef Alloc    allocation_type;
             typedef size_t   size_type;
+            typedef typename allocation_type::reference     reference;
+            typedef typename allocation_type::const_reference     const_reference;
     
             vector()
                 : _array(NULL), _size(0), _capacity(0){};
@@ -92,6 +94,19 @@ namespace ft{
                     this->_array = tmpArray;
                 }
             }
+
+            // ELEMENT ACCESS
+
+            reference at (size_type n){
+                if(n >= this->_size)
+                    throw std::out_of_range("vector");
+                return this->_array[n];
+            }
+
+            const_reference at (size_type n) const {
+
+            }
+            
 
             private:
                 T*     _array;

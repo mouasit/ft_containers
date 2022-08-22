@@ -27,13 +27,14 @@ namespace ft{
                 return this->_array[index];
             }
 
+            // CAPACITY 
 
             size_type size(){
                 return this->_size;
             }
-
-            size_type capacity(){
-                return this->_capacity;
+            
+            size_type max_size() const{
+                return this->_allocation.max_size();
             }
 
             void resize (size_type n, value_type val = value_type())
@@ -61,6 +62,16 @@ namespace ft{
                 }
                 this->_size = n;
             }
+            
+            size_type capacity(){
+                return this->_capacity;
+            }
+            
+            bool empty() const{
+                if (!this->_size)
+                    return true;
+                return false;
+            }
 
             void reserve (size_type n)
             {
@@ -80,16 +91,6 @@ namespace ft{
                     _allocation.deallocate(this->_array, tmpCapacity);
                     this->_array = tmpArray;
                 }
-            }
-
-            bool empty() const{
-                if (!this->_size)
-                    return true;
-                return false;
-            }
-
-            size_type max_size() const{
-                return this->_allocation.max_size();
             }
 
             private:

@@ -151,6 +151,20 @@ namespace ft{
                 this->_size--;
             }
 
+            void swap (vector& x){
+                vector<T>  tmpVector;
+
+                tmpVector._size = x._size;
+                tmpVector._capacity = x._capacity;
+                tmpVector._array = x._array;
+                x._size = this->_size;
+                x._capacity = this->_capacity;
+                x._array = this->_array;
+                this->_size = tmpVector._size;
+                this->_capacity = tmpVector._capacity;
+                this->_array = tmpVector._array;
+            }
+
             private:
                 T*     _array;
                 Alloc  _allocation;

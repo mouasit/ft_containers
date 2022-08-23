@@ -1,31 +1,43 @@
 #include <vector>
 #include "vector.hpp"
 
-int main()
-{
-  ft::vector<int> myvector;
-  myvector.push_back (100);
-  myvector.push_back (200);
-  myvector.push_back (300);
+int main(){
+  ft::vector<int> myvector(5);
+  ft::vector<int> myvectorSwap(10);
 
-  for (size_t i = 0; i < myvector.capacity(); i++)
+  myvector.swap(myvectorSwap);
+
+  std::cout << "swap01: ";
+  for (size_t i = 0; i < myvectorSwap.capacity(); i++)
   {
-    std::cout << myvector[i] << " ";
+    std::cout << myvectorSwap[i] << " ";
   }
 
   std::cout << std::endl;
-
-  std::cout << "---------------" << std::endl;
-
-myvector.pop_back();
-
-  for (size_t i = 0; i < myvector.capacity(); i++)
-  {
-    std::cout << myvector[i] << " ";
-  }
-  std::cout << std::endl;
-
   
+  std::cout << "swap02: ";
 
-  return 0;
+  for (size_t i = 0; i < myvector.capacity(); i++)
+  {
+    std::cout << myvector[i] << " ";
+  }
+
+  std::cout << std::endl;
+
+/*
+  for (size_t i = 0; i < myvector.capacity(); i++)
+  {
+    std::cout << myvector[i];
+  }
+
+  std::cout  << std::endl;
+  
+  for (size_t i = 0; i < myvectorSwap.capacity(); i++)
+  {
+    std::cout << myvectorSwap[i];
+  }
+
+   std::cout << std::endl;
+  */
+
 }

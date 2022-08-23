@@ -146,6 +146,11 @@ namespace ft{
                     this->_size++;
             }
 
+            void pop_back(){
+                _allocation.destroy(this->_array + (this->_size - 1));
+                this->_size--;
+            }
+
             private:
                 T*     _array;
                 Alloc  _allocation;

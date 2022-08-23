@@ -136,17 +136,14 @@ namespace ft{
                 size_type  doubleCapacity = this->_size * 2;
 
                 if (this->_size < this->_capacity)
-                {
-                    _allocation.construct(this->_array + this->_size - 1, val);
-                    this->_size++;
-                }
+                    _allocation.construct(this->_array + this->_size, val);
                 else{
                     if (this->_capacity == 0)
                         doubleCapacity = 1;
                     this->reserve(doubleCapacity);
-                    _allocation.construct(this->_array + this->_size - 1, val);
-                    this->_size++;
+                    _allocation.construct(this->_array + this->_size, val);
                 }
+                    this->_size++;
             }
 
             private:

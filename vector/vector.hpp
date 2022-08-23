@@ -165,6 +165,13 @@ namespace ft{
                 this->_array = tmpVector._array;
             }
 
+            void clear(){
+
+                for (size_t i = 0; i < this->_size; i++)
+                    _allocation.destroy(this->_array + i);
+                this->_size = 0;
+            }
+
             private:
                 T*     _array;
                 Alloc  _allocation;

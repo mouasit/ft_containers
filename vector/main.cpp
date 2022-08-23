@@ -2,42 +2,29 @@
 #include "vector.hpp"
 
 int main(){
-  ft::vector<int> myvector(5);
-  ft::vector<int> myvectorSwap(10);
-
-  myvector.swap(myvectorSwap);
-
-  std::cout << "swap01: ";
-  for (size_t i = 0; i < myvectorSwap.capacity(); i++)
-  {
-    std::cout << myvectorSwap[i] << " ";
-  }
-
-  std::cout << std::endl;
   
-  std::cout << "swap02: ";
+  std::vector<int> myvector;
+  myvector.push_back (100);
+  myvector.push_back (200);
+  myvector.push_back (300);
 
-  for (size_t i = 0; i < myvector.capacity(); i++)
-  {
-    std::cout << myvector[i] << " ";
-  }
+  std::cout << "myvector contains:";
+  for (unsigned i=0; i<myvector.size(); i++)
+    std::cout << ' ' << myvector[i];
+  std::cout << '\n';
 
-  std::cout << std::endl;
+  std::cout << "before: " << myvector.capacity() << std::endl;
 
-/*
-  for (size_t i = 0; i < myvector.capacity(); i++)
-  {
-    std::cout << myvector[i];
-  }
+  myvector.clear();
+  myvector.push_back (1101);
+  myvector.push_back (2202);
 
-  std::cout  << std::endl;
-  
-  for (size_t i = 0; i < myvectorSwap.capacity(); i++)
-  {
-    std::cout << myvectorSwap[i];
-  }
+  std::cout << "myvector contains:";
+  for (unsigned i=0; i<myvector.size(); i++)
+    std::cout << ' ' << myvector[i];
+  std::cout << '\n';
 
-   std::cout << std::endl;
-  */
+  std::cout << "after: " << myvector.capacity() << std::endl;
 
+  return 0;
 }

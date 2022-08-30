@@ -2,17 +2,19 @@
 #define vector_HPP
 
 #include <iostream>
-
+#include "iterator.hpp"
 namespace ft{
     
     template <typename T, typename Alloc = std::allocator<T> >
     class vector{
         public:
-            typedef T       value_type;
-            typedef Alloc    allocation_type;
-            typedef size_t   size_type;
-            typedef typename allocation_type::reference     reference;
-            typedef typename allocation_type::const_reference     const_reference;
+            typedef T                                               value_type;
+            typedef Alloc                                           allocation_type;
+            typedef size_t                                          size_type;
+            typedef typename allocation_type::reference             reference;
+            typedef typename allocation_type::const_reference       const_reference;
+            typedef typename ft::iterator<T>                        iterator;
+            typedef typename ft::const_iterator<T>                  const_iterator;
     
             vector()
                 : _array(NULL), _size(0), _capacity(0){};
@@ -25,6 +27,28 @@ namespace ft{
                 this->_allocation.construct(this->_array + i, val);
         };
             ~vector(){};
+
+            // ITERATOR
+
+            iterator begin(){
+                value_type *it = &this->_array[0];
+                return(iterator(it));
+            }
+            
+            const_iterator begin() const{
+                value_type *it = &this->_array[0];
+                return(const_iterator(it));
+            }
+            
+            iterator end(){
+                value_type *it = &this->_array[this->_size - 1];
+                return(iterator(it));
+            }
+            
+            const_iterator end() const{
+                value_type *it = &this->_array[this->_size - 1];
+                return(const_iterator(it));
+            }
 
             // CAPACITY 
 
@@ -173,7 +197,7 @@ namespace ft{
             }
 
             private:
-                T*     _array;
+                value_type     *_array;
                 Alloc  _allocation;
                 size_type _size;
                 size_type _capacity;

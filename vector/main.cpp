@@ -3,28 +3,14 @@
 
 int main(){
   
-  std::vector<int> myvector;
+  ft::vector<int> myvector;
+  ft::vector<int>::iterator it;
   myvector.push_back (100);
   myvector.push_back (200);
   myvector.push_back (300);
 
-  std::cout << "myvector contains:";
-  for (unsigned i=0; i<myvector.size(); i++)
-    std::cout << ' ' << myvector[i];
-  std::cout << '\n';
+  it = myvector.end();
 
-  std::cout << "before: " << myvector.capacity() << std::endl;
+  std::cout << *it << std::endl;
 
-  myvector.clear();
-  myvector.push_back (1101);
-  myvector.push_back (2202);
-
-  std::cout << "myvector contains:";
-  for (unsigned i=0; i<myvector.size(); i++)
-    std::cout << ' ' << myvector[i];
-  std::cout << '\n';
-
-  std::cout << "after: " << myvector.capacity() << std::endl;
-
-  return 0;
 }

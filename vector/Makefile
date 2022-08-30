@@ -1,7 +1,7 @@
 NAME = vector
 
 SRC =  main.cpp\
-	   vector.cpp
+	   vector.cpp\
 
 all : $(NAME)
 

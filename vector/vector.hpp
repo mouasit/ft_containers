@@ -15,6 +15,7 @@ namespace ft{
             typedef typename allocation_type::const_reference       const_reference;
             typedef typename ft::iterator<T>                        iterator;
             typedef typename ft::const_iterator<T>                  const_iterator;
+            typedef typename ft::reverse_iterator<T>                reverse_iterator;
     
             vector()
                 : _array(NULL), _size(0), _capacity(0){};
@@ -35,20 +36,21 @@ namespace ft{
                 return(iterator(it));
             }
             
-            const_iterator begin() const{
-                value_type *it = &this->_array[0];
-                return(const_iterator(it));
-            }
-            
             iterator end(){
-                value_type *it = &this->_array[this->_size - 1];
+                value_type *it = &this->_array[this->_size];
                 return(iterator(it));
             }
-            
-            const_iterator end() const{
-                value_type *it = &this->_array[this->_size - 1];
-                return(const_iterator(it));
+
+            reverse_iterator rbegin(){
+                value_type *it = &this->_array[this->_size];
+                return(reverse_iterator(it));
             }
+            
+            reverse_iterator rend(){
+                value_type *it = &this->_array[0];
+                return(reverse_iterator(it));
+            }
+
 
             // CAPACITY 
 

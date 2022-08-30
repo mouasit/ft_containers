@@ -1,16 +1,20 @@
 #include <vector>
 #include "vector.hpp"
 
-int main(){
-  
-  ft::vector<int> myvector;
-  ft::vector<int>::iterator it;
-  myvector.push_back (100);
-  myvector.push_back (200);
-  myvector.push_back (300);
+int main ()
+{
+  ft::vector<int> myvector (5);  // 5 default-constructed ints
 
-  it = myvector.end();
+  int i=0;
 
-  std::cout << *it << std::endl;
+  ft::vector<int>::reverse_iterator rit = myvector.rbegin();
+  for (; rit!= myvector.rend(); ++rit)
+    *rit = ++i;
 
+  std::cout << "myvector contains:";
+  for (ft::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+    std::cout << ' ' << *it;
+  std::cout << '\n';
+
+  return 0;
 }

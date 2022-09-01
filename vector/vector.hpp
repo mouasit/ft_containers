@@ -20,7 +20,7 @@ namespace ft{
             vector()
                 : _array(NULL), _size(0), _capacity(0){};
 
-            vector(const size_type len, const allocation_type& alloc = allocation_type(), const value_type& val = value_type())
+            vector(const size_type len,const value_type& val = value_type(),const allocation_type& alloc = allocation_type())
                 : _array(NULL),_allocation(alloc), _size(len), _capacity(len){
 
             this->_array = this->_allocation.allocate(len);

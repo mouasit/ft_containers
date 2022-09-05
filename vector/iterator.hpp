@@ -11,6 +11,13 @@ namespace ft{
             
             value_type& operator* (){return *this->tmp;}
             bool operator != (const iterator val){return this->tmp != val.tmp;}
+            bool operator == (const iterator val){return this->tmp == val.tmp;}
+            bool operator > (const iterator val){return this->tmp > val.tmp;}
+            bool operator < (const iterator val){return this->tmp < val.tmp;}
+            bool operator >= (const iterator val){return this->tmp >= val.tmp;}
+            bool operator <= (const iterator val){return this->tmp <= val.tmp;}
+            iterator operator + (int n){return iterator(this->tmp + n);}
+            iterator operator - (int n){return iterator(this->tmp - n);}
             iterator  operator++ (){
                 this->tmp++;
                 return *this;

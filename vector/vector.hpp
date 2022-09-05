@@ -157,6 +157,22 @@ namespace ft{
             }
 
             // MODIFIERS
+            
+            template <class InputIterator>
+            void assign (InputIterator first, InputIterator last){
+                size_type range = get_range(first,last);
+
+                this->clear();
+                if(range > this->capacity())
+                    this->reserve(range);
+                for (size_t i = 0; i < range; i++)
+                {
+                    this->_allocation.construct(this->_array + i, *first);
+                    first++;
+                }
+                this->_size = range;
+                
+            }
 
             void push_back (const value_type& val){
                 size_type  doubleCapacity = this->_size * 2;
@@ -196,6 +212,14 @@ namespace ft{
                 for (size_t i = 0; i < this->_size; i++)
                     _allocation.destroy(this->_array + i);
                 this->_size = 0;
+            }
+
+            template <class InputIterator>
+            size_type get_range(InputIterator first, InputIterator last){
+                size_type range = 0;
+                for (; first != last; first++)
+                    range++;
+                return range;
             }
 
             private:

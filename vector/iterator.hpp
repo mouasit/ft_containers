@@ -44,12 +44,11 @@ namespace ft{
             typedef T value_type;
 
             reverse_iterator(){};
-            reverse_iterator(value_type &val){this->tmp = val;}
+            reverse_iterator(value_type *val){this->tmp = val;}
             ~reverse_iterator(){};
             
             value_type& operator* (){return *(this->tmp - 1);}
             reverse_iterator operator++ (){
-                std::cout << "im in" << std::endl;
                 this->tmp++;
                 return *this;
             }

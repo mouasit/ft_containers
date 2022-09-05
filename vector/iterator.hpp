@@ -49,12 +49,12 @@ namespace ft{
             
             value_type& operator* (){return *(this->tmp - 1);}
             reverse_iterator operator++ (){
-                this->tmp++;
+                this->tmp--;
                 return *this;
             }
             reverse_iterator operator++ (int){
                 reverse_iterator valuetmp = *this;
-                this->tmp++;
+                this->tmp--;
                 return valuetmp;
             }
             bool operator != (const reverse_iterator val){return this->tmp != val.tmp;}

@@ -157,11 +157,20 @@ namespace ft{
             }
 
             // MODIFIERS
+
+            void assign (size_type n, const value_type& val){
+                this->clear();
+                if(n > this->capacity())
+                    this->reserve(n);
+                for (size_t i = 0; i < n; i++)
+                    this->_allocation.construct(this->_array + i, val);
+                this->_size = n;
+            }
             
-            template <class InputIterator>
+            /*template <class InputIterator>
+            
             void assign (InputIterator first, InputIterator last){
                 size_type range = get_range(first,last);
-
                 this->clear();
                 if(range > this->capacity())
                     this->reserve(range);
@@ -172,7 +181,7 @@ namespace ft{
                 }
                 this->_size = range;
                 
-            }
+            }*/
 
             void push_back (const value_type& val){
                 size_type  doubleCapacity = this->_size * 2;
@@ -191,6 +200,30 @@ namespace ft{
             void pop_back(){
                 _allocation.destroy(this->_array + (this->_size - 1));
                 this->_size--;
+            }
+
+            void insert (iterator position, const value_type& val){
+                iterator it = this->begin();
+                size_t index = 0;
+                for (; it != position; it++)
+                    index++;
+                
+                
+            }
+
+            iterator erase (iterator position){
+                _allocation.destroy(&(*position));
+                this->_size--;
+                return end() - 1;
+            }
+
+            iterator erase (iterator first, iterator last){
+                size_type range = get_range(first,last);
+                for (; first != last; first++)
+                    _allocation.destroy(&(*first));
+                this->_size -= range;
+                return last;
+                
             }
 
             void swap (vector& x){

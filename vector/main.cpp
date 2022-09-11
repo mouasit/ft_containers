@@ -3,8 +3,8 @@
 
 int main ()
 {
-  std::vector<int> myvector (3,100);
-  std::vector<int>::iterator it;
+  ft::vector<int> myvector (3,100);
+  ft::vector<int>::iterator it;
 
   it = myvector.end();
 
@@ -14,9 +14,6 @@ int main ()
   {
     std::cout << myvector[i] << std::endl;
   }
-  
-
-
   /*
   
 

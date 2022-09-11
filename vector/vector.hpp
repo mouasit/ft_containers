@@ -205,9 +205,28 @@ namespace ft{
             void insert (iterator position, const value_type& val){
                 iterator it = this->begin();
                 size_t index = 0;
+                size_t iterate = 0;
+                T       tmp;
+
+                this->_size++;
                 for (; it != position; it++)
                     index++;
                 
+                for (size_t i = 0; i < this->_size; i++)
+                {
+                    if (index > 0)
+                        tmp = *(this->_array + iterate);
+                    if (i == index)
+                    {
+                        tmp = *(this->_array + iterate);
+                        this->_allocation.construct(this->_array + index,val);
+                    }
+                    else
+                    {
+                        this->_allocation.construct(this->_array + i,tmp);
+                        iterate++;
+                    }
+                }
                 
             }
 

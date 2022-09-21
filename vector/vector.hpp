@@ -202,16 +202,24 @@ namespace ft{
                 this->_size--;
             }
 
-            void insert (iterator position, const value_type& val){
+            iterator insert (iterator position, const value_type& val){
+
+                if (this->capacity() == 0)
+                {
+                    push_back(val);
+                    return this->begin();
+                }
+
                 iterator it = this->begin();
                 size_t index = 0;
                 size_t iterate = 0;
                 T       tmp;
 
-                this->_size++;
                 for (; it != position; it++)
                     index++;
-                
+                if (this->_capacity == this->_size)
+                    this->reserve(this->_capacity * 2);
+                this->_size++;
                 for (size_t i = 0; i < this->_size; i++)
                 {
                     if (index > 0)
@@ -227,7 +235,7 @@ namespace ft{
                         iterate++;
                     }
                 }
-                
+                return position;
             }
 
             iterator erase (iterator position){

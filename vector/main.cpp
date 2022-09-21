@@ -3,17 +3,22 @@
 
 int main ()
 {
-  ft::vector<int> myvector (3,100);
+  ft::vector<int> myvector;
   ft::vector<int>::iterator it;
+
+  std::cout << "capacity before: " << myvector.capacity() << std::endl;
 
   it = myvector.end();
 
   myvector.insert(it,40);
+  std::cout << "capacity after: " << myvector.capacity() << std::endl;
 
-  for (size_t i = 0; i < myvector.size(); i++)
+  for (size_t i = 0; i < myvector.capacity(); i++)
   {
-    std::cout << myvector[i] << std::endl;
+    std::cout << myvector[i] << " "; 
   }
+
+  std::cout << std::endl;
   /*
   
 

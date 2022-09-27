@@ -212,30 +212,46 @@ namespace ft{
 
                 iterator it = this->begin();
                 size_t index = 0;
-                size_t iterate = 0;
                 T       tmp;
+                T       origin;
 
                 for (; it != position; it++)
                     index++;
                 if (this->_capacity == this->_size)
                     this->reserve(this->_capacity * 2);
                 this->_size++;
-                for (size_t i = 0; i < this->_size; i++)
+                
+                tmp = *(this->_array + index);
+                this->_allocation.construct(this->_array + index,val);
+
+                for (size_t i = 0; ++index < this->size();i++)
                 {
-                    if (index > 0)
-                        tmp = *(this->_array + iterate);
-                    if (i == index)
+                    if (i == 0)
                     {
-                        tmp = *(this->_array + iterate);
-                        this->_allocation.construct(this->_array + index,val);
+                        origin = *(this->_array + index);
+                        this->_allocation.construct(this->_array + index,tmp);
                     }
-                    else
-                    {
-                        this->_allocation.construct(this->_array + i,tmp);
-                        iterate++;
+                    else{
+                        tmp = *(this->_array + index);
+                        this->_allocation.construct(this->_array + index,origin);
+                        origin = tmp;
                     }
                 }
                 return position;
+                }
+            
+            void insert (iterator position, size_type n, const value_type& val){
+                
+                iterator it = this->begin();
+                size_t index = 0;
+
+                for (; it != position; it++)
+                    index++;
+                if (this->size() + n > this->_capacity * 2)
+                    this->reserve(this->size() + n);
+                for (size_t i = 0; i < n; i++)
+                    insert(this->begin() + index, val);
+                
             }
 
             iterator erase (iterator position){

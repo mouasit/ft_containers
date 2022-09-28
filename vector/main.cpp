@@ -4,20 +4,16 @@
 int main ()
 {
 
-  ft::vector<int> myvector(5,100);
+  ft::vector<int> myvector (3,100);
   ft::vector<int>::iterator it;
 
-  it = myvector.begin();
+  int myarray = 8;
+  myvector.insert (myvector.begin(), myarray, myarray+3);
 
-  myvector.insert(it,20,50);
-
-  for (size_t i = 0; i < myvector.size(); i++)
-  {
-    std::cout << myvector[i] << " ";
-  }
-
-  std::cout << std::endl;
-  
+  std::cout << "myvector contains:";
+  for (it=myvector.begin(); it < myvector.end(); it++)
+    std::cout << ' ' << *it;
+  std::cout << '\n';
 
   return 0;
 }

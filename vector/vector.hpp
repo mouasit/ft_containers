@@ -250,7 +250,24 @@ namespace ft{
                 if (this->size() + n > this->_capacity * 2)
                     this->reserve(this->size() + n);
                 for (size_t i = 0; i < n; i++)
-                    insert(this->begin() + index, val);
+                    insert(this->begin() + index++, val);
+                
+            }
+
+            template <class InputIterator>
+            void insert (iterator position, InputIterator first, InputIterator last){
+
+                //size_type range = get_range(first,last);
+                iterator it = this->begin();
+                size_t index = 0;
+                size_type range = get_range(first, last);
+                
+                for (; it != position; it++)
+                    index++;
+                if (this->size() + range > this->_capacity * 2)
+                    this->reserve(this->size() + range);
+                for (; first != last;first++)
+                    insert(this->begin() + index++, *first);
                 
             }
 

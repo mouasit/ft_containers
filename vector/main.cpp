@@ -7,7 +7,7 @@ int main ()
   ft::vector<int> myvector (3,100);
   ft::vector<int>::iterator it;
 
-  int myarray = 8;
+  int myarray [] = { 501,502,503 };
   myvector.insert (myvector.begin(), myarray, myarray+3);
 
   std::cout << "myvector contains:";

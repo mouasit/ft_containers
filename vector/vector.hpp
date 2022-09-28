@@ -3,6 +3,26 @@
 
 #include <iostream>
 #include "iterator.hpp"
+
+
+
+
+
+/* ----------------------------- WARNING !!  ---------------------------------
+
+    Issues should fix:
+
+    - operator = : between iterartors / const_iterator = iterarot
+    - return position in .insert()
+    - insert(position, first, last): first and last "numbers"
+    
+*/
+
+
+
+
+
+
 namespace ft{
     
     template <typename T, typename Alloc = std::allocator<T> >
@@ -166,22 +186,6 @@ namespace ft{
                     this->_allocation.construct(this->_array + i, val);
                 this->_size = n;
             }
-            
-            /*template <class InputIterator>
-            
-            void assign (InputIterator first, InputIterator last){
-                size_type range = get_range(first,last);
-                this->clear();
-                if(range > this->capacity())
-                    this->reserve(range);
-                for (size_t i = 0; i < range; i++)
-                {
-                    this->_allocation.construct(this->_array + i, *first);
-                    first++;
-                }
-                this->_size = range;
-                
-            }*/
 
             void push_back (const value_type& val){
                 size_type  doubleCapacity = this->_size * 2;
@@ -257,7 +261,6 @@ namespace ft{
             template <class InputIterator>
             void insert (iterator position, InputIterator first, InputIterator last){
 
-                //size_type range = get_range(first,last);
                 iterator it = this->begin();
                 size_t index = 0;
                 size_type range = get_range(first, last);

@@ -51,9 +51,29 @@ class Tree
             //leaf node 
             if (root->left == nullptr && root->right == nullptr)
             {
-                root = nullptr;
                 delete root;
                 return nullptr;
+            }
+            // --------------------------------
+            //node with one child only
+
+            else{
+                if (root->left == nullptr)
+                {
+                    Node *tmp = root->right;
+                    delete root;
+                    return tmp;
+                }
+                else if (root->right == nullptr)
+                {
+                    Node *tmp = root->left;
+                    delete root;
+                    return tmp;
+                }
+                // node with two child
+                else{
+                    
+                }
             }
         }
         return root;

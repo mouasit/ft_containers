@@ -24,14 +24,14 @@ class Tree
 
     void    insertHelper(Node *tmp, int value)
     {
-        if(value <= tmp->data)
+        if(value < tmp->data)
         {
             if(tmp->left == nullptr)
                 tmp->left = createNode(value);
             else
                 insertHelper(tmp->left, value);
         }
-        else{
+        else if (value > tmp->data){
             if(tmp->right == nullptr)
                 tmp->right = createNode(value);
             else
@@ -70,9 +70,11 @@ class Tree
                     delete root;
                     return tmp;
                 }
-                // node with two child
+                // node with two children
                 else{
-                    
+                    int maxValue = getMaxValue(root->left);
+                    root->data = maxValue;
+                    root->left = earseHelper(root->left, maxValue);
                 }
             }
         }
@@ -90,6 +92,16 @@ class Tree
         void  earse(int value){
 
             this->root = earseHelper(this->root, value);
+        }
+
+        int getMaxValue(Node *root)
+        {
+            Node *tmp = root;
+
+            while (tmp->right != nullptr)
+                tmp = tmp->right;
+            return tmp->data;
+            
         }
 
         void printTree(Node *root){

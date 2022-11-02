@@ -11,6 +11,7 @@ class Tree
         int data;
         Node *left;
         Node *right;
+        int height;
     };
 
 
@@ -19,24 +20,27 @@ class Tree
         newNode->data = value;
         newNode->left = nullptr;
         newNode->right = nullptr;
+        newNode->height = 1;
         return newNode;
     }
 
-    void    insertHelper(Node *tmp, int value)
+    Node    *insertHelper(Node *root, int value)
     {
-        if(value < tmp->data)
+        if(value < root->data)
         {
-            if(tmp->left == nullptr)
-                tmp->left = createNode(value);
+            if(root->left == nullptr)
+                root->left = createNode(value);
             else
-                insertHelper(tmp->left, value);
+                root->left =  insertHelper(root->left, value);
         }
-        else if (value > tmp->data){
-            if(tmp->right == nullptr)
-                tmp->right = createNode(value);
+        else if (value > root->data){
+            if(root->right == nullptr)
+                root->right = createNode(value);
             else
-                insertHelper(tmp->right, value);
+                root->right = insertHelper(root->right, value);
         }
+
+        return root;
     }
 
     Node   *earseHelper(Node *root, int value)
@@ -86,7 +90,7 @@ class Tree
             if (root == nullptr)
                 root = createNode(value);
             else
-                insertHelper(root,value);
+                root = insertHelper(root,value);
         }
 
         void  earse(int value){

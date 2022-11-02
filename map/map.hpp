@@ -12,6 +12,7 @@ class Tree
         Node *left;
         Node *right;
         int height;
+        int bf;
     };
 
 
@@ -24,6 +25,38 @@ class Tree
         return newNode;
     }
 
+    int max(int heightLeft, int heightRight)
+    {
+        if (heightLeft > heightRight)
+            return heightLeft;
+        else
+            return heightRight;
+    }
+
+    int     updateHeight(Node *root)
+    {
+        int leftHeight = 0;
+        int rightHeight = 0;
+
+        if(root->left)
+            leftHeight = root->left->height;
+        if(root->right)
+            rightHeight = root->right->height;
+        return (max(leftHeight, rightHeight) + 1);
+    }
+
+    int   getBalanceFactor(Node *root)
+    {
+        int leftHeight = 0;
+        int rightHeight = 0;
+
+        if(root->left)
+            leftHeight = root->left->height;
+        if(root->right)
+            rightHeight = root->right->height;
+        return (leftHeight - rightHeight);
+    }
+
     Node    *insertHelper(Node *root, int value)
     {
         if(value < root->data)
@@ -33,13 +66,19 @@ class Tree
             else
                 root->left =  insertHelper(root->left, value);
         }
-        else if (value > root->data){
+        else if (value > root->data)
+        {
             if(root->right == nullptr)
                 root->right = createNode(value);
             else
                 root->right = insertHelper(root->right, value);
         }
-
+        root->height = updateHeight(root);
+        root->bf = getBalanceFactor(root);
+        if (root->bf == 2 || root->bf == -2)
+        {
+            
+        }
         return root;
     }
 
@@ -113,7 +152,7 @@ class Tree
                 return;
             } 
             printTree(root->left);
-            std::cout << root->data << std::endl;
+            std::cout <<"data: " << root->data << " | " << "height: " << root->height << " | " << "bf: " << root->bf << std::endl;
             printTree(root->right);
         };
 };

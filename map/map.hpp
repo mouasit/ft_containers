@@ -57,6 +57,18 @@ class Tree
         return (leftHeight - rightHeight);
     }
 
+    void    leftRotation(Node *root)
+    {
+        std::cout << root->data << std::endl;
+    }
+
+    Node    *rightRotation(Node *root)
+    {
+        Node  *tmp = root;
+        delete root;
+        tmp->left->right->data = tmp->data;
+        return tmp->left;
+    }
     Node    *insertHelper(Node *root, int value)
     {
         if(value < root->data)
@@ -77,7 +89,51 @@ class Tree
         root->bf = getBalanceFactor(root);
         if (root->bf == 2 || root->bf == -2)
         {
-            
+            if (root->bf == 2)
+            {
+                //check if right rotation or left right rotation
+
+                // right rotation
+                if (root->left->bf == 1)
+                {
+                    Node *newNode;
+                    Node *tmp = root->left->right;
+                    root->left->right = root;
+                    newNode = root->left;
+                    newNode->right->left = tmp;
+
+                    newNode->left->height = updateHeight(newNode->left);
+                    newNode->left->bf = getBalanceFactor(newNode->left);
+                    newNode->right->height = updateHeight(newNode->right);
+                    newNode->right->bf = getBalanceFactor(newNode->right);
+                    newNode->height = updateHeight(newNode);
+                    newNode->bf = getBalanceFactor(newNode);
+                    return newNode;
+                }
+
+                //left right rotation
+                if(root->left->bf == -1)
+                {
+
+                }
+            }
+            if (root->bf == -2)
+            {
+                //check if left rotation or right left rotation
+                
+                // left rotation
+                if (root->right->bf == -1)
+                {
+
+                }
+
+                //right left rotation
+                if(root->right->bf == 1)
+                {
+
+                }
+                
+            }
         }
         return root;
     }

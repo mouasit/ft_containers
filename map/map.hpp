@@ -57,18 +57,35 @@ class Tree
         return (leftHeight - rightHeight);
     }
 
-    void    leftRotation(Node *root)
-    {
-        std::cout << root->data << std::endl;
-    }
-
     Node    *rightRotation(Node *root)
     {
-        Node  *tmp = root;
-        delete root;
-        tmp->left->right->data = tmp->data;
-        return tmp->left;
+        Node *tmp = root->left->right;
+        Node *newNode;
+
+        root->left->right = root;
+        newNode = root->left;
+        newNode->right->left = tmp;
+                    
+        newNode->right->height = updateHeight(newNode->right);
+        newNode->right->bf = getBalanceFactor(newNode->right);
+        newNode->height = updateHeight(newNode);
+        newNode->bf = getBalanceFactor(newNode);
+        return newNode;
     }
+        Node    *leftRotation(Node *root)
+        {
+            Node *tmp = root->right->left;
+            Node *newNode;
+            
+            root->right->left = root;
+            newNode = root->right;
+            newNode->left->right = tmp;
+            newNode->left->height = updateHeight(newNode->right);
+            newNode->left->bf = getBalanceFactor(newNode->right);
+            newNode->height = updateHeight(newNode);
+            newNode->bf = getBalanceFactor(newNode);
+            return newNode;
+        }
     Node    *insertHelper(Node *root, int value)
     {
         if(value < root->data)
@@ -95,26 +112,12 @@ class Tree
 
                 // right rotation
                 if (root->left->bf == 1)
-                {
-                    Node *newNode;
-                    Node *tmp = root->left->right;
-                    root->left->right = root;
-                    newNode = root->left;
-                    newNode->right->left = tmp;
-
-                    newNode->left->height = updateHeight(newNode->left);
-                    newNode->left->bf = getBalanceFactor(newNode->left);
-                    newNode->right->height = updateHeight(newNode->right);
-                    newNode->right->bf = getBalanceFactor(newNode->right);
-                    newNode->height = updateHeight(newNode);
-                    newNode->bf = getBalanceFactor(newNode);
-                    return newNode;
-                }
+                   return rightRotation(root);
 
                 //left right rotation
                 if(root->left->bf == -1)
                 {
-
+                    return leftRotation(root);
                 }
             }
             if (root->bf == -2)

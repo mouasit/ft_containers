@@ -65,7 +65,7 @@ class Tree
         root->left->right = root;
         newNode = root->left;
         newNode->right->left = tmp;
-                    
+
         newNode->right->height = updateHeight(newNode->right);
         newNode->right->bf = getBalanceFactor(newNode->right);
         newNode->height = updateHeight(newNode);
@@ -117,7 +117,20 @@ class Tree
                 //left right rotation
                 if(root->left->bf == -1)
                 {
-                    return leftRotation(root);
+                    Node *tmpNode = root->left;
+                    Node *tmp = root->left->right->left;
+                    root->left = root->left->right;
+                    root->left->left = tmpNode;
+                    root->left->left->right = tmp;
+
+                    root->left->left->height = updateHeight(root->left->left);
+                    root->left->left->bf = getBalanceFactor(root->left->left);
+                    root->left->height = updateHeight(root->left);
+                    root->left->bf = getBalanceFactor(root->left);
+                    root->height = updateHeight(root);
+                    root->bf = getBalanceFactor(root);
+
+                    return (rightRotation(root));
                 }
             }
             if (root->bf == -2)
@@ -127,13 +140,26 @@ class Tree
                 // left rotation
                 if (root->right->bf == -1)
                 {
-
+                    return leftRotation(root);
                 }
 
                 //right left rotation
                 if(root->right->bf == 1)
                 {
+                    Node *tmpNode = root->right;
+                    Node *tmp = root->right->left->right;
 
+                    root->right = root->right->left;
+                    root->right->right = tmpNode;
+                    root->right->right->left = tmp;
+
+                    root->right->right->height = updateHeight(root->right->right);
+                    root->right->right->bf = getBalanceFactor(root->right->right);
+                    root->right->height = updateHeight(root->right);
+                    root->right->bf = getBalanceFactor(root->right);
+                    root->height = updateHeight(root);
+                    root->bf = getBalanceFactor(root);
+                    return (leftRotation(root));
                 }
                 
             }

@@ -3,6 +3,21 @@
 
 #include <iostream>
 #include <map>
+namespace ft{
+template <typename T1, typename T2>
+class Pair
+{
+    private:
+    public:
+    T1      first;
+    T2      second;
+    Pair(void){};
+    Pair(const T1 first, const T2 second){
+        this->first = first;
+        this->second = second;
+    }
+    
+};
 
 class Tree
 {
@@ -240,6 +255,12 @@ class Tree
             std::cout <<"data: " << root->data << " | " << "height: " << root->height << " | " << "bf: " << root->bf << std::endl;
             printTree(root->right);
         };
-};
-
+    };
+    template <typename T1, typename T2>
+    Pair<T1,T2> make_pair(const T1 value1, const T2 value2)
+    {
+        Pair<T1,T2> pair(value1,value1);
+        return (pair);
+    }
+}
 #endif

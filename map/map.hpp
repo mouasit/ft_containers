@@ -2,6 +2,7 @@
 #define MAP_HPP
 
 #include <iostream>
+#include <functional>
 #include <map>
 namespace ft{
 template <typename T1, typename T2>
@@ -25,11 +26,12 @@ class pair
     }
 };
 
+template <typename T1, typename T2>
 class Tree
 {
     private:
     struct Node{
-        int data;
+        pair<T1,T2> data;
         Node *left;
         Node *right;
         int height;
@@ -37,14 +39,16 @@ class Tree
     };
 
 
-    Node *createNode(int value){
+    Node *createNode(pair<T1,T2> pair){
         Node *newNode = new Node;
-        newNode->data = value;
+        newNode->data.first = pair.first;
+        newNode->data.second = pair.second;
         newNode->left = nullptr;
         newNode->right = nullptr;
         newNode->height = 1;
         return newNode;
     }
+
 
     int max(int heightLeft, int heightRight)
     {
@@ -107,21 +111,22 @@ class Tree
             newNode->bf = getBalanceFactor(newNode);
             return newNode;
         }
-    Node    *insertHelper(Node *root, int value)
+
+    Node    *insertHelper(Node *root, pair<T1,T2> pair)
     {
-        if(value < root->data)
+        if(this->less(pair.first,root->data.first))
         {
             if(root->left == nullptr)
-                root->left = createNode(value);
+                root->left = createNode(pair);
             else
-                root->left =  insertHelper(root->left, value);
+                root->left =  insertHelper(root->left, pair);
         }
-        else if (value > root->data)
+        else if (this->less(root->data.first,pair.first))
         {
             if(root->right == nullptr)
-                root->right = createNode(value);
+                root->right = createNode(pair);
             else
-                root->right = insertHelper(root->right, value);
+                root->right = insertHelper(root->right, pair);
         }
         root->height = updateHeight(root);
         root->bf = getBalanceFactor(root);
@@ -188,14 +193,16 @@ class Tree
         return root;
     }
 
-    Node   *earseHelper(Node *root, int value)
+    
+
+    Node   *earseHelper(Node *root, T1 key)
     {
         if(root == nullptr)
             return root;
-        if (value < root->data)
-            root->left = earseHelper(root->left,value);
-        else if (value > root->data)
-            root->right = earseHelper(root->right, value);
+        if (this->less(key,root->data.first))
+            root->left = earseHelper(root->left,key);
+        else if (this->less(root->data.first,key))
+            root->right = earseHelper(root->right, key);
         else{
             //leaf node 
             if (root->left == nullptr && root->right == nullptr)
@@ -221,35 +228,99 @@ class Tree
                 }
                 // node with two children
                 else{
-                    int maxValue = getMaxValue(root->left);
-                    root->data = maxValue;
+                    T1 maxValue = getMaxValue(root->left);
+                    root->data.first = maxValue;
                     root->left = earseHelper(root->left, maxValue);
                 }
             }
         }
+        root->height = updateHeight(root);
+        root->bf = getBalanceFactor(root);
+        if (root->bf == 2 || root->bf == -2)
+        {
+            if (root->bf == 2)
+            {
+                //check if right rotation or left right rotation
+
+                // right rotation
+                if (root->left->bf == 1)
+                   return rightRotation(root);
+
+                //left right rotation
+                if(root->left->bf == -1)
+                {
+                    Node *tmpNode = root->left;
+                    Node *tmp = root->left->right->left;
+                    root->left = root->left->right;
+                    root->left->left = tmpNode;
+                    root->left->left->right = tmp;
+
+                    root->left->left->height = updateHeight(root->left->left);
+                    root->left->left->bf = getBalanceFactor(root->left->left);
+                    root->left->height = updateHeight(root->left);
+                    root->left->bf = getBalanceFactor(root->left);
+                    root->height = updateHeight(root);
+                    root->bf = getBalanceFactor(root);
+
+                    return (rightRotation(root));
+                }
+            }
+            if (root->bf == -2)
+            {
+                //check if left rotation or right left rotation
+                
+                // left rotation
+                if (root->right->bf == -1)
+                {
+                    return leftRotation(root);
+                }
+
+                //right left rotation
+                if(root->right->bf == 1)
+                {
+                    Node *tmpNode = root->right;
+                    Node *tmp = root->right->left->right;
+
+                    root->right = root->right->left;
+                    root->right->right = tmpNode;
+                    root->right->right->left = tmp;
+
+                    root->right->right->height = updateHeight(root->right->right);
+                    root->right->right->bf = getBalanceFactor(root->right->right);
+                    root->right->height = updateHeight(root->right);
+                    root->right->bf = getBalanceFactor(root->right);
+                    root->height = updateHeight(root);
+                    root->bf = getBalanceFactor(root);
+                    return (leftRotation(root));
+                }
+                
+            }
+        }
+
         return root;
     };
     public:
         Node    *root = nullptr;
-        void    insert(int value){
+        std::less<T1> less;
+        void    insert(const pair<T1,T2> pair){
             if (root == nullptr)
-                root = createNode(value);
+                root = createNode(pair);
             else
-                root = insertHelper(root,value);
+                root = insertHelper(root,pair);
         }
 
-        void  earse(int value){
+        void  earse(T1 key){
 
-            this->root = earseHelper(this->root, value);
+            this->root = earseHelper(this->root, key);
         }
 
-        int getMaxValue(Node *root)
+        T1 getMaxValue(Node *root)
         {
             Node *tmp = root;
 
             while (tmp->right != nullptr)
                 tmp = tmp->right;
-            return tmp->data;
+            return tmp->data.first;
             
         }
 
@@ -258,7 +329,7 @@ class Tree
                 return;
             } 
             printTree(root->left);
-            std::cout <<"data: " << root->data << " | " << "height: " << root->height << " | " << "bf: " << root->bf << std::endl;
+            std::cout <<"data: " << root->data.first << " | " << "height: " << root->height << " | " << "bf: " << root->bf << std::endl;
             printTree(root->right);
         };
     };

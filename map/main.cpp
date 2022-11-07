@@ -4,16 +4,16 @@
 int main(){
     ft:: pair<int,int> pair6(5,2);
 
-    ft::Tree<std::string, int> myTree;
+    ft::avlTree<std::string, int> avlTree;
 
-    myTree.insert(ft::pair<std::string,int>("mustapha",20));
-    myTree.insert(ft::pair<std::string,int>("ayoub",5));
-    myTree.insert(ft::pair<std::string,int>("hamid",2));
+    avlTree.insert(ft::pair<std::string,int>("mustapha",20));
+    avlTree.insert(ft::pair<std::string,int>("ayoub",5));
+    avlTree.insert(ft::pair<std::string,int>("hamid",2));
 
-    myTree.printTree(myTree.root);
+    avlTree.printTree(avlTree.root);
 
-    myTree.earse("mustapha");
+    avlTree.earse("ayoub");
 
-    myTree.printTree(myTree.root);
+    avlTree.printTree(avlTree.root);
 
 }

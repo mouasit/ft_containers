@@ -27,7 +27,7 @@ class pair
 };
 
 template <typename T1, typename T2>
-class Tree
+class avlTree
 {
     private:
     struct Node{

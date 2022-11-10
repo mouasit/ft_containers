@@ -1,8 +1,8 @@
 #ifndef AVL_TREE_HPP
 #define AVL_TREE_HPP
 
-template <typename T1, typename T2>
-class avlTree
+template <typename T1, typename T2, typename key_compare>
+class avl_tree
 {
     private:
     struct Node{
@@ -12,7 +12,6 @@ class avlTree
         int height;
         int bf;
     };
-
 
     Node *createNode(pair<T1,T2> pair){
         Node *newNode = new Node;
@@ -89,17 +88,23 @@ class avlTree
 
     Node    *insertHelper(Node *root, pair<T1,T2> pair)
     {
-        if(this->less(pair.first,root->data.first))
+        if(compare(pair.first,root->data.first))
         {
             if(root->left == nullptr)
+            {
                 root->left = createNode(pair);
+                this->size++;
+            }
             else
                 root->left =  insertHelper(root->left, pair);
         }
-        else if (this->less(root->data.first,pair.first))
+        else if (compare(root->data.first,pair.first))
         {
             if(root->right == nullptr)
+            {
                 root->right = createNode(pair);
+                this->size++;
+            }
             else
                 root->right = insertHelper(root->right, pair);
         }
@@ -174,15 +179,16 @@ class avlTree
     {
         if(root == nullptr)
             return root;
-        if (this->less(key,root->data.first))
+        if (compare(key,root->data.first))
             root->left = earseHelper(root->left,key);
-        else if (this->less(root->data.first,key))
+        else if (compare(root->data.first,key))
             root->right = earseHelper(root->right, key);
         else{
             //leaf node 
             if (root->left == nullptr && root->right == nullptr)
             {
                 delete root;
+                this->size--;
                 return nullptr;
             }
             // --------------------------------
@@ -193,12 +199,14 @@ class avlTree
                 {
                     Node *tmp = root->right;
                     delete root;
+                    this->size--;
                     return tmp;
                 }
                 else if (root->right == nullptr)
                 {
                     Node *tmp = root->left;
                     delete root;
+                    this->size--;
                     return tmp;
                 }
                 // node with two children
@@ -274,12 +282,23 @@ class avlTree
 
         return root;
     };
-    public:
+
+        public:
         Node    *root = nullptr;
-        std::less<T1> less;
+        key_compare compare;
+        size_t  size = 0;
+        
+        /*avl_tree(key_compare &compe){
+            this->root = nullptr;
+            compare = compe;
+        };
+        ~avl_tree(){};*/
         void    insert(const pair<T1,T2> pair){
             if (root == nullptr)
+            {
                 root = createNode(pair);
+                this->size++;
+            }
             else
                 root = insertHelper(root,pair);
         }
@@ -296,6 +315,16 @@ class avlTree
             while (tmp->right != nullptr)
                 tmp = tmp->right;
             return tmp->data.first;
+            
+        }
+        
+        pair<T1,T2> &getMinValue(Node *root)
+        {
+            Node *tmp = root;
+
+            while (tmp->left != nullptr)
+                tmp = tmp->left;
+            return tmp->data;
             
         }
 

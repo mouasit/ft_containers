@@ -6,6 +6,7 @@
 #include "../utils/pair.hpp"
 #include "../utils/avlTree.hpp"
 #include "../utils/iterator.hpp"
+#include "../utils/Node.hpp"
 
 namespace ft{
     template <typename key, typename value, typename compare = std::less<key>,
@@ -14,16 +15,18 @@ namespace ft{
     class map{
 
         public:
-        typedef key                                          key_type;
-        typedef value                                        mapped_type;
-        typedef compare                                      key_compare;
-        typedef pair<key_type, mapped_type>                  value_type;
-        typedef Alloc                                        allocator_type;
-        typedef avl_tree<key_type, mapped_type, key_compare> avl;
-        typedef typename ft::iterator<value_type>            iterator;
-        typedef size_t                                       size_type;
+        typedef key                                                     key_type;
+        typedef value                                                  mapped_type;
+        typedef compare                                                key_compare;
+        typedef pair<key_type, mapped_type>                            value_type;
+        typedef Alloc                                                  allocator_type;
+        typedef Node<value_type>                                       node_type;
+        typedef avl_tree<key_type, mapped_type, node_type,key_compare> avl;
 
-        avl avl_inst;
+        typedef typename ft::iterator<value_type, node_type>            iterator;
+        typedef size_t                                                  size_type;
+
+        avl                                                             avl_inst;
         explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()){
             
         }
@@ -46,8 +49,8 @@ namespace ft{
         }
 
         iterator begin(){
-            value_type *pair = &avl_inst.getMinValue(avl_inst.root);
-            return iterator(pair);
+            node_type *node = avl_inst.getMinValue(avl_inst.root);
+            return iterator(node);
         }
 
         size_type size() const{

@@ -1,18 +1,15 @@
 #ifndef AVL_TREE_HPP
 #define AVL_TREE_HPP
 
-template <typename T1, typename T2, typename key_compare>
+
+template <typename T1, typename T2, typename Node , typename key_compare>
 class avl_tree
 {
-    private:
-    struct Node{
-        pair<T1,T2> data;
-        Node *left;
-        Node *right;
-        int height;
-        int bf;
-    };
-
+    public:
+    Node    *root = nullptr;
+    key_compare compare;
+    size_t  size = 0;
+    
     Node *createNode(pair<T1,T2> pair){
         Node *newNode = new Node;
         newNode->data.first = pair.first;
@@ -282,12 +279,6 @@ class avl_tree
 
         return root;
     };
-
-        public:
-        Node    *root = nullptr;
-        key_compare compare;
-        size_t  size = 0;
-        
         /*avl_tree(key_compare &compe){
             this->root = nullptr;
             compare = compe;
@@ -318,14 +309,13 @@ class avl_tree
             
         }
         
-        pair<T1,T2> &getMinValue(Node *root)
+        Node *getMinValue(Node *root)
         {
             Node *tmp = root;
 
             while (tmp->left != nullptr)
                 tmp = tmp->left;
-            return tmp->data;
-            
+            return tmp;
         }
 
         void printTree(Node *root){

@@ -4,17 +4,17 @@
 #include <iostream>
 #include "../map/map.hpp"
 namespace ft{
-    template <typename value_type>
+    template <typename T, typename Node>
     class iterator{
         public:
         iterator(){};
 
-        iterator(value_type *pair){
-            this->pair = pair;
+        iterator(Node *node){
+            this->node = node;
         }
         
         iterator operator= (const iterator &it){
-            this->pair = it.pair;
+            this->node = it.node;
             return *this;
         }
 
@@ -26,14 +26,15 @@ namespace ft{
             return this->pair != it.pair;
         }
 
-        value_type *operator->(void){
-            return pair;
+        T *operator->(void){
+            return &this->node->data;
         }
 
         ~iterator(){};
         
         private:
-        value_type *pair;
+            T     *pair;
+            Node  *node;
     };
 }
 #endif

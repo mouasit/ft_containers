@@ -55,12 +55,12 @@ namespace ft{
             else
                 node = avl_inst.getMinValue(avl_inst.root);
 
-            return iterator(node);
+            return iterator(node,&avl_inst);
         }
 
         iterator end(){
             node_type *node = avl_inst.createNode(pair<key_type,mapped_type>(key_type(),mapped_type()));
-            return node;
+            return iterator(node,&avl_inst,true);
         }
 
         size_type size() const{

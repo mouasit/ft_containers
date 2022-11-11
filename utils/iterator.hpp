@@ -10,12 +10,16 @@ namespace ft{
         public:
         iterator(){};
 
-        iterator(Node *node){
+        iterator(Node *node, Avl *avl_tree, bool past_last = false){
+            if(past_last)
+                this->past_last = true;
+            this->avl_tree = avl_tree;
             this->node = node;
         }
         
         iterator operator= (const iterator &it){
             this->node = it.node;
+            this->avl_tree = it.avl_tree;
             return *this;
         }
 
@@ -29,7 +33,13 @@ namespace ft{
 
         iterator operator--(int){
             iterator copy = *this;
-            this->node = avl_tree->inorder_predecessor(this->node);
+            if(this->past_last)
+            {
+                this->node = this->avl_tree->getMaxValue(this->avl_tree->root);
+                this->past_last = false;
+            }
+            else
+                this->node = this->avl_tree->inorder_predecessor(this->node);
             return copy;
         }
 
@@ -50,6 +60,7 @@ namespace ft{
         private:
             Avl   *avl_tree;
             Node  *node;
+            bool past_last;
     };
 }
 #endif

@@ -10,7 +10,7 @@ class avl_tree
     key_compare compare;
     size_t  size = 0;
 
-    Node  *inorder_predecessor(Node *root)
+    Node  *inorder_successor(Node *root)
     {
         Node    *parent;
 
@@ -25,7 +25,7 @@ class avl_tree
         return parent;
     }
 
-    Node    *inorder_successor(Node *root)
+    Node    *inorder_predecessor(Node *root)
     {
         Node    *parent;
 

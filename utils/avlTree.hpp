@@ -7,40 +7,73 @@ class avl_tree
 {
     public:
     Node    *root = nullptr;
+    Node    *tmp_node = createNode(pair<T1,T1>(T1(),T2()));
     key_compare compare;
     size_t  size = 0;
 
-    Node  *inorder_successor(Node *root)
-    {
-        Node    *parent;
+Node *inorder_successor(Node *root, T1 key){
 
-        if(root->right != nullptr)
-            return this->getMinValue(root->right);
-        parent = root->parent;
-        while (parent != nullptr && root == parent->right)
-        {
-            root = parent;
-            parent = parent->parent;
+    Node *successor = nullptr;
+
+  while (true) {
+      if (key < root->data.first) {
+        successor = root;
+        root = root->left;
+      }
+
+      else if (key > root->data.first){
+        root = root->right;
+      }
+      else {
+        if (root->right != nullptr) {
+            
+            successor = getMinValue(root->right);
         }
-        return parent;
+        break;
+      }
+
+      if (root == nullptr){
+        return nullptr;
+      }
     }
 
-    Node    *inorder_predecessor(Node *root)
-    {
-        Node    *parent;
+    if(successor)
+        return successor;
+    else
+        return nullptr;
+}
 
-        if(root->left != nullptr)
-            return this->getMaxValue(root->left);
-        parent = root->parent;
-        while (parent != nullptr && root == parent->left)
-        {
-            root = parent;
-            parent = parent->parent;
-        }
-        return parent;
+Node *inorder_predecessor(Node *root, T1 key){
+
+    Node *predecessor = nullptr;
+
+  while (true) {
+      if (key < root->data.first)
+        root = root->left;
+
+      else if (key > root->data.first){
+        predecessor = root;
+        root = root->right;
+      }
+      else {
+        if (root->left != nullptr)
+            predecessor= getMaxValue(root->left);
+        break;
+      }
+
+      if (root == nullptr){
+        return nullptr;
+      }
     }
-    
-    Node *createNode(pair<T1,T2> pair){
+
+    if(predecessor)
+        return predecessor;
+    else
+        return nullptr;
+
+}
+
+Node *createNode(pair<T1,T2> pair){
         Node *newNode = new Node;
         newNode->data.first = pair.first;
         newNode->data.second = pair.second;

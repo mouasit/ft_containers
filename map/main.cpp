@@ -7,9 +7,9 @@ int main(){
         ft::map<int,int>::iterator it;
         mymap.insert(pair<int,int>(5,1));
         mymap.insert(pair<int,int>(3,1));
-        mymap.insert(pair<int,int>(2,1));
+        mymap.insert(pair<int,int>(8,1));
         
         it = mymap.begin();
-        it++;
+        it--;
        std::cout << "ft: " <<  it->first  << std::endl;
 }

@@ -27,7 +27,7 @@ namespace ft{
         iterator operator++(int){
 
             iterator copy = *this;
-            this->node = avl_tree->inorder_successor(this->node);
+            this->node = this->avl_tree->inorder_successor(this->avl_tree->root, this->node->data.first);
             return copy;
         }
 
@@ -39,7 +39,7 @@ namespace ft{
                 this->past_last = false;
             }
             else
-                this->node = this->avl_tree->inorder_predecessor(this->node);
+                this->node = this->avl_tree->inorder_predecessor(this->avl_tree->root, this->node->data.first);
             return copy;
         }
 

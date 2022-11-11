@@ -51,7 +51,7 @@ namespace ft{
         iterator begin(){
             node_type *node;
             if(this->empty())
-                node = avl_inst.createNode(pair<key_type,mapped_type>(key_type(),mapped_type()));
+                node = avl_inst.tmp_node;
             else
                 node = avl_inst.getMinValue(avl_inst.root);
 
@@ -59,7 +59,7 @@ namespace ft{
         }
 
         iterator end(){
-            node_type *node = avl_inst.createNode(pair<key_type,mapped_type>(key_type(),mapped_type()));
+            node_type *node = avl_inst.tmp_node;
             return iterator(node,&avl_inst,true);
         }
 

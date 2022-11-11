@@ -23,7 +23,7 @@ namespace ft{
         typedef Node<value_type>                                       node_type;
         typedef avl_tree<key_type, mapped_type, node_type,key_compare> avl;
 
-        typedef typename ft::iterator<value_type, node_type>            iterator;
+        typedef typename ft::iterator<value_type, node_type, avl>            iterator;
         typedef size_t                                                  size_type;
 
         avl                                                             avl_inst;
@@ -49,8 +49,18 @@ namespace ft{
         }
 
         iterator begin(){
-            node_type *node = avl_inst.getMinValue(avl_inst.root);
+            node_type *node;
+            if(this->empty())
+                node = avl_inst.createNode(pair<key_type,mapped_type>(key_type(),mapped_type()));
+            else
+                node = avl_inst.getMinValue(avl_inst.root);
+
             return iterator(node);
+        }
+
+        iterator end(){
+            node_type *node = avl_inst.createNode(pair<key_type,mapped_type>(key_type(),mapped_type()));
+            return node;
         }
 
         size_type size() const{

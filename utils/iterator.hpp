@@ -3,8 +3,9 @@
 
 #include <iostream>
 #include "../map/map.hpp"
+#include "./pair.hpp"
 namespace ft{
-    template <typename T, typename Node>
+    template <typename T, typename Node, typename Avl>
     class iterator{
         public:
         iterator(){};
@@ -17,6 +18,8 @@ namespace ft{
             this->node = it.node;
             return *this;
         }
+
+    
 
         bool operator== (const iterator &it){
             return this->pair == it.pair;
@@ -33,7 +36,7 @@ namespace ft{
         ~iterator(){};
         
         private:
-            T     *pair;
+            Avl   *avl_tree;
             Node  *node;
     };
 }

@@ -10,6 +10,7 @@ class Node
         T data;
         Node *left;
         Node *right;
+        Node *parent;
         int height;
         int bf;
 };

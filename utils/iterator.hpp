@@ -27,6 +27,12 @@ namespace ft{
             return copy;
         }
 
+        iterator operator--(int){
+            iterator copy = *this;
+            this->node = avl_tree->inorder_predecessor(this->node);
+            return copy;
+        }
+
         bool operator== (const iterator &it){
             return this->pair == it.pair;
         }

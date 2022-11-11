@@ -10,7 +10,7 @@ class avl_tree
     key_compare compare;
     size_t  size = 0;
 
-    Node  *inorder_successor(Node *root)
+    Node  *inorder_predecessor(Node *root)
     {
         Node    *parent;
 
@@ -18,6 +18,21 @@ class avl_tree
             return this->getMinValue(root->right);
         parent = root->parent;
         while (parent != nullptr && root == parent->right)
+        {
+            root = parent;
+            parent = parent->parent;
+        }
+        return parent;
+    }
+
+    Node    *inorder_successor(Node *root)
+    {
+        Node    *parent;
+
+        if(root->left != nullptr)
+            return this->getMaxValue(root->left);
+        parent = root->parent;
+        while (parent != nullptr && root == parent->left)
         {
             root = parent;
             parent = parent->parent;
@@ -105,6 +120,7 @@ class avl_tree
             if(root->left == nullptr)
             {
                 root->left = createNode(pair);
+                root->left->parent = root;
                 this->size++;
             }
             else
@@ -115,6 +131,7 @@ class avl_tree
             if(root->right == nullptr)
             {
                 root->right = createNode(pair);
+                root->left->parent = root;
                 this->size++;
             }
             else
@@ -223,8 +240,8 @@ class avl_tree
                 }
                 // node with two children
                 else{
-                    T1 maxValue = getMaxValue(root->left);
-                    root->data.first = maxValue;
+                    Node *maxValue = getMaxValue(root->left);
+                    root->data.first = maxValue->data.first;
                     root->left = earseHelper(root->left, maxValue);
                 }
             }
@@ -314,13 +331,13 @@ class avl_tree
             this->root = earseHelper(this->root, key);
         }
 
-        T1 getMaxValue(Node *root)
+        Node *getMaxValue(Node *root)
         {
             Node *tmp = root;
 
             while (tmp->right != nullptr)
                 tmp = tmp->right;
-            return tmp->data.first;
+            return tmp;
             
         }
         

@@ -6,8 +6,8 @@ int main(){
         ft::map<int, int> mymap;
         ft::map<int,int>::iterator it;
         mymap.insert(pair<int,int>(5,1));
-        mymap.insert(pair<int,int>(4,8));
-        mymap.insert(pair<int,int>(6,6));
+        mymap.insert(pair<int,int>(3,1));
+        mymap.insert(pair<int,int>(2,1));
         
         it = mymap.begin();
         it++;

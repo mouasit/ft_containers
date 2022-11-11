@@ -9,6 +9,21 @@ class avl_tree
     Node    *root = nullptr;
     key_compare compare;
     size_t  size = 0;
+
+    Node  *inorder_successor(Node *root)
+    {
+        Node    *parent;
+
+        if(root->right != nullptr)
+            return this->getMinValue(root->right);
+        parent = root->parent;
+        while (parent != nullptr && root == parent->right)
+        {
+            root = parent;
+            parent = parent->parent;
+        }
+        return parent;
+    }
     
     Node *createNode(pair<T1,T2> pair){
         Node *newNode = new Node;

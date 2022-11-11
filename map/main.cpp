@@ -9,6 +9,7 @@ int main(){
         mymap.insert(pair<int,int>(4,8));
         mymap.insert(pair<int,int>(6,6));
         
-        it = mymap.end();
+        it = mymap.begin();
+        it++;
        std::cout << "ft: " <<  it->first  << std::endl;
 }

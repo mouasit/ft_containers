@@ -19,7 +19,13 @@ namespace ft{
             return *this;
         }
 
-    
+
+        iterator operator++(int){
+
+            iterator copy = *this;
+            this->node = avl_tree->inorder_successor(this->node);
+            return copy;
+        }
 
         bool operator== (const iterator &it){
             return this->pair == it.pair;

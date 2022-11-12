@@ -13,6 +13,7 @@ namespace ft{
         iterator(Node *node, Avl *avl_tree, bool past_last = false){
             if(past_last)
                 this->past_last = true;
+            this->increase = true;
             this->avl_tree = avl_tree;
             this->node = node;
         }
@@ -28,11 +29,17 @@ namespace ft{
 
             iterator copy = *this;
             this->node = this->avl_tree->inorder_successor(this->avl_tree->root, this->node->data.first);
+            if(this->node == nullptr && increase)
+            {
+                this->node = this->avl_tree->tmp_node;
+                increase = false;
+            }
             return copy;
         }
 
         iterator operator--(int){
             iterator copy = *this;
+
             if(this->past_last)
             {
                 this->node = this->avl_tree->getMaxValue(this->avl_tree->root);
@@ -60,7 +67,8 @@ namespace ft{
         private:
             Avl   *avl_tree;
             Node  *node;
-            bool past_last;
+            bool  past_last;
+            bool  increase;
     };
 }
 #endif

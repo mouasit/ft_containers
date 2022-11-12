@@ -49,7 +49,7 @@ namespace ft{
         }
 
         iterator begin(){
-            node_type *node;
+            node_type *node = nullptr;
             if(this->empty())
                 node = avl_inst.tmp_node;
             else

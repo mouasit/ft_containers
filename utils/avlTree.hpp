@@ -2,20 +2,23 @@
 #define AVL_TREE_HPP
 
 
+#include <cstddef>
 template <typename T1, typename T2, typename Node , typename key_compare, typename Alloc>
 class avl_tree
 {
     private:
-        Alloc  _allocation;
+        Alloc  _allocator;
+		typename Alloc::template rebind<Node>::other	_node_allocator;
     public:
-        Node    *root = NULL;
+        Node    *root;
         Node    *tmp_node;
         key_compare compare;
         size_t  size;
 
         avl_tree(){
-          this->tmp_node = createNode(pair<T1,T1>(T1(),T2()));
+            this->root = NULL;
           this->size = 0;
+          this->tmp_node = createNode(pair<T1,T1>(T1(),T2()));
         }
 
     Node *inorder_successor(Node *root, T1 key){
@@ -77,13 +80,9 @@ Node *inorder_predecessor(Node *root, T1 key){
 
 }
 
-Node *createNode(pair<T1,T2> pair){
-        Node *newNode = _allocation.allocate(1);
-        newNode->data.first = pair.first;
-        newNode->data.second = pair.second;
-        newNode->left = NULL;
-        newNode->right = NULL;
-        newNode->height = 1;
+Node *createNode(pair<T1,T2> data){
+        Node *newNode = _node_allocator.allocate(1);
+        _node_allocator.construct(newNode,data);
         return newNode;
     }
 
@@ -130,9 +129,7 @@ Node *createNode(pair<T1,T2> pair){
         newNode->right->left = tmp;
 
         newNode->right->height = updateHeight(newNode->right);
-        newNode->right->bf = getBalanceFactor(newNode->right);
         newNode->height = updateHeight(newNode);
-        newNode->bf = getBalanceFactor(newNode);
         return newNode;
     }
         Node    *leftRotation(Node *root)
@@ -144,20 +141,18 @@ Node *createNode(pair<T1,T2> pair){
             newNode = root->right;
             newNode->left->right = tmp;
             newNode->left->height = updateHeight(newNode->right);
-            newNode->left->bf = getBalanceFactor(newNode->right);
             newNode->height = updateHeight(newNode);
-            newNode->bf = getBalanceFactor(newNode);
             return newNode;
         }
 
     Node    *insertHelper(Node *root, pair<T1,T2> pair)
     {
+        int bf = 0;
         if(compare(pair.first,root->data.first))
         {
             if(root->left == NULL)
             {
                 root->left = createNode(pair);
-                root->left->parent = root;
                 this->size++;
             }
             else
@@ -168,26 +163,25 @@ Node *createNode(pair<T1,T2> pair){
             if(root->right == NULL)
             {
                 root->right = createNode(pair);
-                root->left->parent = root;
                 this->size++;
             }
             else
                 root->right = insertHelper(root->right, pair);
         }
         root->height = updateHeight(root);
-        root->bf = getBalanceFactor(root);
-        if (root->bf == 2 || root->bf == -2)
+        bf = getBalanceFactor(root);
+        if (bf == 2 || bf == -2)
         {
-            if (root->bf == 2)
+            if (bf == 2)
             {
                 //check if right rotation or left right rotation
 
                 // right rotation
-                if (root->left->bf == 1)
+                if (getBalanceFactor(root->left) == 1)
                    return rightRotation(root);
 
                 //left right rotation
-                if(root->left->bf == -1)
+                if(getBalanceFactor(root->left) == -1)
                 {
                     Node *tmpNode = root->left;
                     Node *tmp = root->left->right->left;
@@ -196,27 +190,22 @@ Node *createNode(pair<T1,T2> pair){
                     root->left->left->right = tmp;
 
                     root->left->left->height = updateHeight(root->left->left);
-                    root->left->left->bf = getBalanceFactor(root->left->left);
                     root->left->height = updateHeight(root->left);
-                    root->left->bf = getBalanceFactor(root->left);
                     root->height = updateHeight(root);
-                    root->bf = getBalanceFactor(root);
 
                     return (rightRotation(root));
                 }
             }
-            if (root->bf == -2)
+            if (bf == -2)
             {
                 //check if left rotation or right left rotation
                 
                 // left rotation
-                if (root->right->bf == -1)
-                {
+                if (getBalanceFactor(root->right) == -1)
                     return leftRotation(root);
-                }
 
                 //right left rotation
-                if(root->right->bf == 1)
+                if(getBalanceFactor(root->right) == 1)
                 {
                     Node *tmpNode = root->right;
                     Node *tmp = root->right->left->right;
@@ -226,11 +215,8 @@ Node *createNode(pair<T1,T2> pair){
                     root->right->right->left = tmp;
 
                     root->right->right->height = updateHeight(root->right->right);
-                    root->right->right->bf = getBalanceFactor(root->right->right);
                     root->right->height = updateHeight(root->right);
-                    root->right->bf = getBalanceFactor(root->right);
                     root->height = updateHeight(root);
-                    root->bf = getBalanceFactor(root);
                     return (leftRotation(root));
                 }
                 
@@ -243,6 +229,7 @@ Node *createNode(pair<T1,T2> pair){
 
     Node   *earseHelper(Node *root, T1 key)
     {
+        int bf = 0;
         if(root == NULL)
             return root;
         if (compare(key,root->data.first))
@@ -284,19 +271,19 @@ Node *createNode(pair<T1,T2> pair){
             }
         }
         root->height = updateHeight(root);
-        root->bf = getBalanceFactor(root);
-        if (root->bf == 2 || root->bf == -2)
+        bf = getBalanceFactor(root);
+        if (bf == 2 || bf == -2)
         {
-            if (root->bf == 2)
+            if (bf == 2)
             {
                 //check if right rotation or left right rotation
 
                 // right rotation
-                if (root->left->bf == 1)
+                if (getBalanceFactor(root->left) == 1)
                    return rightRotation(root);
 
                 //left right rotation
-                if(root->left->bf == -1)
+                if(getBalanceFactor(root->left) == -1)
                 {
                     Node *tmpNode = root->left;
                     Node *tmp = root->left->right->left;
@@ -305,27 +292,22 @@ Node *createNode(pair<T1,T2> pair){
                     root->left->left->right = tmp;
 
                     root->left->left->height = updateHeight(root->left->left);
-                    root->left->left->bf = getBalanceFactor(root->left->left);
                     root->left->height = updateHeight(root->left);
-                    root->left->bf = getBalanceFactor(root->left);
                     root->height = updateHeight(root);
-                    root->bf = getBalanceFactor(root);
 
                     return (rightRotation(root));
                 }
             }
-            if (root->bf == -2)
+            if (bf == -2)
             {
                 //check if left rotation or right left rotation
                 
                 // left rotation
-                if (root->right->bf == -1)
-                {
+                if (getBalanceFactor(root->right) == -1)
                     return leftRotation(root);
-                }
 
                 //right left rotation
-                if(root->right->bf == 1)
+                if(getBalanceFactor(root->right) == 1)
                 {
                     Node *tmpNode = root->right;
                     Node *tmp = root->right->left->right;
@@ -335,17 +317,13 @@ Node *createNode(pair<T1,T2> pair){
                     root->right->right->left = tmp;
 
                     root->right->right->height = updateHeight(root->right->right);
-                    root->right->right->bf = getBalanceFactor(root->right->right);
                     root->right->height = updateHeight(root->right);
-                    root->right->bf = getBalanceFactor(root->right);
                     root->height = updateHeight(root);
-                    root->bf = getBalanceFactor(root);
                     return (leftRotation(root));
                 }
                 
             }
         }
-
         return root;
     };
         /*avl_tree(key_compare &compe){
@@ -392,7 +370,7 @@ Node *createNode(pair<T1,T2> pair){
                 return;
             } 
             printTree(root->left);
-            std::cout <<"data: " << root->data.first << " | " << "height: " << root->height << " | " << "bf: " << root->bf << std::endl;
+            std::cout <<"data: " << root->data.first << " | " << "height: " << root->height << " | " << std::endl;
             printTree(root->right);
         };
     };

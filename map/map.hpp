@@ -33,7 +33,7 @@ namespace ft{
         }*/
 
         map(){}
-
+        /*
         template <class InputIterator>
         map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()){
 
@@ -41,7 +41,7 @@ namespace ft{
 
         map(const map& x){
 
-        }
+        }*/
 
         void    insert (const value_type& val){
             avl_inst.insert(val);

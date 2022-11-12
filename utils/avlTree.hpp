@@ -240,7 +240,8 @@ Node *createNode(pair<T1,T2> data){
             //leaf node 
             if (root->left == NULL && root->right == NULL)
             {
-                delete root;
+                this->_node_allocator.destroy(root);
+                this->_node_allocator.deallocate(root,1);
                 this->size--;
                 return NULL;
             }
@@ -251,14 +252,16 @@ Node *createNode(pair<T1,T2> data){
                 if (root->left == NULL)
                 {
                     Node *tmp = root->right;
-                    delete root;
+                    this->_node_allocator.destroy(root);
+                    this->_node_allocator.deallocate(root,1);
                     this->size--;
                     return tmp;
                 }
                 else if (root->right == NULL)
                 {
                     Node *tmp = root->left;
-                    delete root;
+                    this->_node_allocator.destroy(root);
+                    this->_node_allocator.deallocate(root,1);
                     this->size--;
                     return tmp;
                 }

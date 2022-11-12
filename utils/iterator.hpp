@@ -8,7 +8,10 @@ namespace ft{
     template <typename T, typename Node, typename Avl>
     class iterator{
         public:
-        iterator(){};
+        iterator(){
+            this->increase = true;
+            this->past_last = false;
+        };
 
         iterator(Node *node, Avl *avl_tree, bool past_last = false){
             if(past_last)
@@ -61,6 +64,13 @@ namespace ft{
         T *operator->(void){
             return &this->node->data;
         }
+        
+        T *operator*(void){
+
+            return &this->node->data;
+        }
+        
+        
 
         ~iterator(){};
         

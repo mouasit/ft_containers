@@ -14,5 +14,4 @@ int main(){
         it++;
         it++;
         it++;
-       std::cout << "ft: " <<  it->first  << std::endl;
 }

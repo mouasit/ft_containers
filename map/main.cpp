@@ -11,7 +11,5 @@ int main(){
         
         it = mymap.begin();
         it++;
-        it++;
-        it++;
-        it++;
+       std::cout << "ft: " << it->first << std::endl;
 }

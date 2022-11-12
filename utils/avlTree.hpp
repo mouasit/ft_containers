@@ -2,50 +2,54 @@
 #define AVL_TREE_HPP
 
 
-template <typename T1, typename T2, typename Node , typename key_compare>
+template <typename T1, typename T2, typename Node , typename key_compare, typename Alloc>
 class avl_tree
 {
+    private:
+        Alloc  _allocation;
     public:
-    Node    *root = nullptr;
-    Node    *tmp_node = createNode(pair<T1,T1>(T1(),T2()));
-    key_compare compare;
-    size_t  size = 0;
+        Node    *root = NULL;
+        Node    *tmp_node;
+        key_compare compare;
+        size_t  size;
 
-Node *inorder_successor(Node *root, T1 key){
-
-    Node *successor = nullptr;
-
-  while (true) {
-      if (key < root->data.first) {
-        successor = root;
-        root = root->left;
-      }
-
-      else if (key > root->data.first){
-        root = root->right;
-      }
-      else {
-        if (root->right != nullptr) {
-            
-            successor = getMinValue(root->right);
+        avl_tree(){
+          this->tmp_node = createNode(pair<T1,T1>(T1(),T2()));
+          this->size = 0;
         }
-        break;
+
+    Node *inorder_successor(Node *root, T1 key){
+        Node *successor = NULL;
+        
+        while (true) {
+            if (key < root->data.first) {
+                successor = root;
+                root = root->left;
+            }
+            else if (key > root->data.first){
+                    root = root->right;
+                }
+                else 
+                {
+                    if (root->right != NULL)
+                        successor = getMinValue(root->right);
+            break;
       }
 
-      if (root == nullptr){
-        return nullptr;
+      if (root == NULL){
+        return NULL;
       }
     }
 
     if(successor)
         return successor;
     else
-        return nullptr;
+        return NULL;
 }
 
 Node *inorder_predecessor(Node *root, T1 key){
 
-    Node *predecessor = nullptr;
+    Node *predecessor = NULL;
 
   while (true) {
       if (key < root->data.first)
@@ -56,29 +60,29 @@ Node *inorder_predecessor(Node *root, T1 key){
         root = root->right;
       }
       else {
-        if (root->left != nullptr)
+        if (root->left != NULL)
             predecessor= getMaxValue(root->left);
         break;
       }
 
-      if (root == nullptr){
-        return nullptr;
+      if (root == NULL){
+        return NULL;
       }
     }
 
     if(predecessor)
         return predecessor;
     else
-        return nullptr;
+        return NULL;
 
 }
 
 Node *createNode(pair<T1,T2> pair){
-        Node *newNode = new Node;
+        Node *newNode = _allocation.allocate(1);
         newNode->data.first = pair.first;
         newNode->data.second = pair.second;
-        newNode->left = nullptr;
-        newNode->right = nullptr;
+        newNode->left = NULL;
+        newNode->right = NULL;
         newNode->height = 1;
         return newNode;
     }
@@ -150,7 +154,7 @@ Node *createNode(pair<T1,T2> pair){
     {
         if(compare(pair.first,root->data.first))
         {
-            if(root->left == nullptr)
+            if(root->left == NULL)
             {
                 root->left = createNode(pair);
                 root->left->parent = root;
@@ -161,7 +165,7 @@ Node *createNode(pair<T1,T2> pair){
         }
         else if (compare(root->data.first,pair.first))
         {
-            if(root->right == nullptr)
+            if(root->right == NULL)
             {
                 root->right = createNode(pair);
                 root->left->parent = root;
@@ -239,7 +243,7 @@ Node *createNode(pair<T1,T2> pair){
 
     Node   *earseHelper(Node *root, T1 key)
     {
-        if(root == nullptr)
+        if(root == NULL)
             return root;
         if (compare(key,root->data.first))
             root->left = earseHelper(root->left,key);
@@ -247,24 +251,24 @@ Node *createNode(pair<T1,T2> pair){
             root->right = earseHelper(root->right, key);
         else{
             //leaf node 
-            if (root->left == nullptr && root->right == nullptr)
+            if (root->left == NULL && root->right == NULL)
             {
                 delete root;
                 this->size--;
-                return nullptr;
+                return NULL;
             }
             // --------------------------------
             //node with one child only
 
             else{
-                if (root->left == nullptr)
+                if (root->left == NULL)
                 {
                     Node *tmp = root->right;
                     delete root;
                     this->size--;
                     return tmp;
                 }
-                else if (root->right == nullptr)
+                else if (root->right == NULL)
                 {
                     Node *tmp = root->left;
                     delete root;
@@ -345,12 +349,12 @@ Node *createNode(pair<T1,T2> pair){
         return root;
     };
         /*avl_tree(key_compare &compe){
-            this->root = nullptr;
+            this->root = NULL;
             compare = compe;
         };
         ~avl_tree(){};*/
         void    insert(const pair<T1,T2> pair){
-            if (root == nullptr)
+            if (root == NULL)
             {
                 root = createNode(pair);
                 this->size++;
@@ -368,7 +372,7 @@ Node *createNode(pair<T1,T2> pair){
         {
             Node *tmp = root;
 
-            while (tmp->right != nullptr)
+            while (tmp->right != NULL)
                 tmp = tmp->right;
             return tmp;
             
@@ -378,13 +382,13 @@ Node *createNode(pair<T1,T2> pair){
         {
             Node *tmp = root;
 
-            while (tmp->left != nullptr)
+            while (tmp->left != NULL)
                 tmp = tmp->left;
             return tmp;
         }
 
         void printTree(Node *root){
-            if (root == nullptr) {
+            if (root == NULL) {
                 return;
             } 
             printTree(root->left);

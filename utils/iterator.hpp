@@ -32,7 +32,7 @@ namespace ft{
 
             iterator copy = *this;
             this->node = this->avl_tree->inorder_successor(this->avl_tree->root, this->node->data.first);
-            if(this->node == nullptr && increase)
+            if(this->node == NULL && increase)
             {
                 this->node = this->avl_tree->tmp_node;
                 increase = false;

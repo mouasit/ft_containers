@@ -233,15 +233,15 @@ Node *createNode(ft::pair<T1,T2> data){
 
     
 
-    Node   *earseHelper(Node *root, T1 key)
+    Node   *eraseHelper(Node *root, T1 key)
     {
         int bf = 0;
         if(root == NULL)
             return root;
         if (compare(key,root->data.first))
-            root->left = earseHelper(root->left,key);
+            root->left = eraseHelper(root->left,key);
         else if (compare(root->data.first,key))
-            root->right = earseHelper(root->right, key);
+            root->right = eraseHelper(root->right, key);
         else{
             //leaf node 
             if (root->left == NULL && root->right == NULL)
@@ -275,7 +275,7 @@ Node *createNode(ft::pair<T1,T2> data){
                 else{
                     Node *maxValue = getMaxValue(root->left);
                     root->data.first = maxValue->data.first;
-                    root->left = earseHelper(root->left, maxValue->data.first);
+                    root->left = eraseHelper(root->left, maxValue->data.first);
                 }
             }
         }
@@ -350,9 +350,9 @@ Node *createNode(ft::pair<T1,T2> data){
                 root = insertHelper(root,pair);
         }
 
-        void  earse(T1 key){
+        void  erase(T1 key){
 
-            this->root = earseHelper(this->root, key);
+            this->root = eraseHelper(this->root, key);
         }
 
         Node *getMaxValue(Node *root)

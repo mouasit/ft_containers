@@ -39,6 +39,17 @@ namespace ft{
             }
             return copy;
         }
+        
+        iterator operator++(void){
+
+            this->node = this->avl_tree->inorder_successor(this->avl_tree->root, this->node->data.first);
+            if(this->node == NULL && increase)
+            {
+                this->node = this->avl_tree->tmp_node;
+                increase = false;
+            }
+            return *this;
+        }
 
         iterator operator--(int){
             iterator copy = *this;
@@ -51,6 +62,18 @@ namespace ft{
             else
                 this->node = this->avl_tree->inorder_predecessor(this->avl_tree->root, this->node->data.first);
             return copy;
+        }
+
+
+        iterator operator--(void){
+            if(this->past_last)
+            {
+                this->node = this->avl_tree->getMaxValue(this->avl_tree->root);
+                this->past_last = false;
+            }
+            else
+                this->node = this->avl_tree->inorder_predecessor(this->avl_tree->root, this->node->data.first);
+            return *this;
         }
 
         bool operator== (const iterator &it){

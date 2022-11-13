@@ -70,10 +70,10 @@ namespace ft{
             }
         }
 
-        // earse
+        // erase
 
         void erase (iterator position){
-            this->avl_inst.earse(position->first);
+            this->avl_inst.erase(position->first);
         }
 
         size_type erase (const key_type& k){

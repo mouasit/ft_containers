@@ -85,6 +85,16 @@ namespace ft{
             return 1;
         }
 
+        void erase (iterator first, iterator last){
+            iterator tmp(first);
+
+            while(first != last){
+                tmp++;
+                this->erase(first);
+                first = tmp;
+            }
+        }
+
         bool    empty() const{
             return avl_inst.size == 0;
         }

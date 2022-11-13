@@ -275,7 +275,7 @@ Node *createNode(ft::pair<T1,T2> data){
                 else{
                     Node *maxValue = getMaxValue(root->left);
                     root->data.first = maxValue->data.first;
-                    root->left = earseHelper(root->left, maxValue);
+                    root->left = earseHelper(root->left, maxValue->data.first);
                 }
             }
         }

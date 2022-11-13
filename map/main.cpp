@@ -2,15 +2,21 @@
 #include <map>
 #include "../utils/pair.hpp"
 int main(){
+        std::map<int,int> mymap;
+        std::map<int,int>::iterator it;
 
-        ft::map<int,int> mymap;
-        pair<ft::map<int,int>::iterator,bool> mypair;
+        mymap.insert(std::pair<int,int>(5,5));
+        mymap.insert(std::pair<int,int>(4,5));
+        mymap.insert(std::pair<int,int>(8,5));
 
-        mypair = mymap.insert(pair<int,int>(5,1));
-        mypair = mymap.insert(pair<int,int>(9,1));
-        mypair = mymap.insert(pair<int,int>(6,1));
-        mypair = mymap.insert(pair<int,int>(7,1));
-        mypair = mymap.insert(pair<int,int>(9,1));
-        std::cout << mypair.first->first << std::endl;
-        std::cout << mypair.second << std::endl;
+        it = mymap.begin();
+        std::cout << it->first << std::endl;
+        /*------------------------*/
+        mymap.insert(it,std::pair<int,int>(9,5));
+
+        it = mymap.begin();
+        it++;
+        it++;
+        it++;
+        std::cout << it->first << std::endl;
 }

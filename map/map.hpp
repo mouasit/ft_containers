@@ -56,6 +56,10 @@ namespace ft{
             return tmp;
         }
 
+        iterator insert (iterator, const value_type& val){
+            return this->insert(val).first;
+        }
+
         bool    empty() const{
             return avl_inst.size == 0;
         }

@@ -54,20 +54,20 @@ namespace ft{
         }
 
         bool operator== (const iterator &it){
-            return this->pair == it.pair;
+            return this->node == it.node;
         }
         
         bool operator!= (const iterator &it){
-            return this->pair != it.pair;
+            return this->node != it.node;
         }
 
         T *operator->(void){
             return &this->node->data;
         }
         
-        T *operator*(void){
+        T &operator*(void){
 
-            return &this->node->data;
+            return this->node->data;
         }
         
         

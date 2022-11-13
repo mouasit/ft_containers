@@ -60,6 +60,14 @@ namespace ft{
             return this->insert(val).first;
         }
 
+        template <class InputIterator>
+        void insert (InputIterator first, InputIterator last){
+            while (first != last) {
+                this->insert(*first);
+                first++;
+            }
+        }
+
         bool    empty() const{
             return avl_inst.size == 0;
         }

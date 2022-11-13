@@ -45,10 +45,14 @@ namespace ft{
 
         pair<iterator,bool> insert(const value_type& val){
             pair<iterator,bool> tmp;
+            const size_type size = avl_inst.size;
 
             avl_inst.insert(val);
             tmp.first = iterator(avl_inst.node_insert,&avl_inst);
-            tmp.second = true;
+            if(size == avl_inst.size)
+                tmp.second = false;
+            else
+                tmp.second = false;
             return tmp;
         }
 

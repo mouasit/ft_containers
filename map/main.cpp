@@ -8,7 +8,9 @@ int main(){
 
         mypair = mymap.insert(pair<int,int>(5,1));
         mypair = mymap.insert(pair<int,int>(9,1));
-        mypair.first--;
+        mypair = mymap.insert(pair<int,int>(6,1));
+        mypair = mymap.insert(pair<int,int>(7,1));
+        mypair = mymap.insert(pair<int,int>(9,1));
         std::cout << mypair.first->first << std::endl;
-        std::cout << mypair.first->second << std::endl;
+        std::cout << mypair.second << std::endl;
 }

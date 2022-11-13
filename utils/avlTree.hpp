@@ -3,6 +3,7 @@
 
 
 #include <cstddef>
+#include <iostream>
 template <typename T1, typename T2, typename Node , typename key_compare, typename Alloc>
 class avl_tree
 {
@@ -169,6 +170,9 @@ Node *createNode(pair<T1,T2> data){
             }
             else
                 root->right = insertHelper(root->right, pair);
+        }
+        else{
+            this->node_insert = root;
         }
         root->height = updateHeight(root);
         bf = getBalanceFactor(root);

@@ -11,14 +11,17 @@ class avl_tree
 		typename Alloc::template rebind<Node>::other	_node_allocator;
     public:
         Node    *root;
+        Node    *node_insert;
         Node    *tmp_node;
         key_compare compare;
         size_t  size;
 
+
         avl_tree(){
+            this->size = 0;
             this->root = NULL;
-          this->size = 0;
-          this->tmp_node = createNode(pair<T1,T1>(T1(),T2()));
+            this->node_insert = NULL;
+            this->tmp_node = createNode(pair<T1,T1>(T1(),T2()));
         }
 
     Node *inorder_successor(Node *root, T1 key){
@@ -46,8 +49,7 @@ class avl_tree
 
     if(successor)
         return successor;
-    else
-        return NULL;
+    return NULL;
 }
 
 Node *inorder_predecessor(Node *root, T1 key){
@@ -75,14 +77,14 @@ Node *inorder_predecessor(Node *root, T1 key){
 
     if(predecessor)
         return predecessor;
-    else
-        return NULL;
+    return NULL;
 
 }
 
 Node *createNode(pair<T1,T2> data){
         Node *newNode = _node_allocator.allocate(1);
         _node_allocator.construct(newNode,data);
+        this->node_insert = newNode;
         return newNode;
     }
 

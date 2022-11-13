@@ -43,8 +43,13 @@ namespace ft{
 
         }*/
 
-        void    insert (const value_type& val){
+        pair<iterator,bool> insert(const value_type& val){
+            pair<iterator,bool> tmp;
+
             avl_inst.insert(val);
+            tmp.first = iterator(avl_inst.node_insert,&avl_inst);
+            tmp.second = true;
+            return tmp;
         }
 
         bool    empty() const{

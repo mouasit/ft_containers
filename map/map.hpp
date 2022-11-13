@@ -73,7 +73,16 @@ namespace ft{
         // earse
 
         void erase (iterator position){
-            avl_inst.earse(position->first);
+            this->avl_inst.earse(position->first);
+        }
+
+        size_type erase (const key_type& k){
+            const size_type size = this->avl_inst.size;
+            
+            this->avl_inst.erase(k);
+            if (size == this->avl_inst.size)
+                return 0;
+            return 1;
         }
 
         bool    empty() const{

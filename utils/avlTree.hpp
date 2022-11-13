@@ -22,7 +22,7 @@ class avl_tree
             this->size = 0;
             this->root = NULL;
             this->node_insert = NULL;
-            this->tmp_node = createNode(pair<T1,T1>(T1(),T2()));
+            this->tmp_node = createNode(ft::pair<T1,T1>(T1(),T2()));
         }
 
     Node *inorder_successor(Node *root, T1 key){
@@ -82,7 +82,7 @@ Node *inorder_predecessor(Node *root, T1 key){
 
 }
 
-Node *createNode(pair<T1,T2> data){
+Node *createNode(ft::pair<T1,T2> data){
         Node *newNode = _node_allocator.allocate(1);
         _node_allocator.construct(newNode,data);
         this->node_insert = newNode;
@@ -148,7 +148,7 @@ Node *createNode(pair<T1,T2> data){
             return newNode;
         }
 
-    Node    *insertHelper(Node *root, pair<T1,T2> pair)
+    Node    *insertHelper(Node *root, ft::pair<T1,T2> pair)
     {
         int bf = 0;
         if(compare(pair.first,root->data.first))
@@ -165,11 +165,11 @@ Node *createNode(pair<T1,T2> data){
         {
             if(root->right == NULL)
             {
-                root->right = createNode(pair);
+                root->right = createNode( pair);
                 this->size++;
             }
             else
-                root->right = insertHelper(root->right, pair);
+                root->right = insertHelper(root->right,pair);
         }
         else{
             this->node_insert = root;
@@ -340,7 +340,7 @@ Node *createNode(pair<T1,T2> data){
             compare = compe;
         };
         ~avl_tree(){};*/
-        void    insert(const pair<T1,T2> pair){
+        void    insert(const ft::pair<T1,T2> pair){
             if (root == NULL)
             {
                 root = createNode(pair);

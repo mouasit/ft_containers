@@ -10,7 +10,7 @@
 
 namespace ft{
     template <typename key, typename value, typename compare = std::less<key>,
-    typename Alloc = std::allocator<pair<key, value> > >
+    typename Alloc = std::allocator<ft::pair<key, value> > >
 
     class map{
 
@@ -18,7 +18,7 @@ namespace ft{
         typedef key                                                     key_type;
         typedef value                                                  mapped_type;
         typedef compare                                                key_compare;
-        typedef pair<key_type, mapped_type>                            value_type;
+        typedef typename ft::pair<key_type, mapped_type>                            value_type;
         typedef Alloc                                                  allocator_type;
         typedef Node<value_type>                                       node_type;
         typedef avl_tree<key_type, mapped_type, node_type,key_compare, allocator_type> avl;
@@ -43,8 +43,10 @@ namespace ft{
 
         }*/
 
-        pair<iterator,bool> insert(const value_type& val){
-            pair<iterator,bool> tmp;
+        // insert
+
+        ft::pair<iterator,bool> insert(const value_type& val){
+            ft::pair<iterator,bool> tmp;
             const size_type size = avl_inst.size;
 
             avl_inst.insert(val);
@@ -66,6 +68,12 @@ namespace ft{
                 this->insert(*first);
                 first++;
             }
+        }
+
+        // earse
+
+        void erase (iterator position){
+            avl_inst.earse(position->first);
         }
 
         bool    empty() const{

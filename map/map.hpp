@@ -43,11 +43,28 @@ namespace ft{
             return iterator(node,&avl_inst);
         }
 
+        const_iterator begin() const{
+            
+            node_type *node = NULL;
+            if(this->empty())
+                node = avl_inst.tmp_node;
+            else
+                node = avl_inst.getMinValue(avl_inst.root);
+
+            std::cout << "return" << std::endl;
+            return const_iterator(node,&avl_inst);
+
+        }
+
         iterator end(){
             node_type *node = avl_inst.tmp_node;
             return iterator(node,&avl_inst,true);
         }
 
+        const_iterator end() const{
+            node_type *node = avl_inst.tmp_node;
+            return const_iterator(node,&avl_inst,true);
+        }
         /* ----- Modifiers ----- */
 
         // insert

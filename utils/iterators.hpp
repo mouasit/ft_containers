@@ -5,9 +5,14 @@
 #include "../map/map.hpp"
 #include "./pair.hpp"
 namespace ft{
-    template <typename T, typename Node, typename Avl>
+    template <typename value_type, typename Node, typename Avl>
+    class const_iterator;
+
+    template <typename value_type, typename Node, typename Avl>
     class iterator{
         public:
+        typedef value_type* pointer;
+        typedef value_type& reference;
         iterator(){
             this->increase = true;
             this->past_last = false;
@@ -19,6 +24,10 @@ namespace ft{
             this->increase = true;
             this->avl_tree = avl_tree;
             this->node = node;
+        }
+
+        operator const_iterator<value_type,Node, Avl>(){
+            return const_iterator<value_type,Node, Avl>(this->node, this->avl_tree);
         }
         
         iterator operator= (const iterator &it){
@@ -84,11 +93,11 @@ namespace ft{
             return this->node != it.node;
         }
 
-        T *operator->(void){
+        pointer operator->(void){
             return &this->node->data;
         }
         
-        T &operator*(void){
+        reference operator*(void){
 
             return this->node->data;
         }
@@ -104,9 +113,12 @@ namespace ft{
             bool  increase;
     };
     
-    template <typename T, typename Node, typename Avl>
+    template <typename value_type, typename Node, typename Avl>
     class const_iterator{
         public:
+        
+        typedef const value_type* pointer;
+        typedef const value_type& reference;
         const_iterator(){
             this->increase = true;
             this->past_last = false;
@@ -183,16 +195,14 @@ namespace ft{
             return this->node != it.node;
         }
 
-        const T *operator->(void){
+        pointer operator->(void){
             return &this->node->data;
         }
         
-       const T &operator*(void){
+       reference operator*(void){
 
             return this->node->data;
         }
-        
-        
 
         ~const_iterator(){};
         

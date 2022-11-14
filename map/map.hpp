@@ -5,7 +5,7 @@
 #include <functional>
 #include "../utils/pair.hpp"
 #include "../utils/avlTree.hpp"
-#include "../utils/iterator.hpp"
+#include "../utils/iterators.hpp"
 #include "../utils/Node.hpp"
 
 namespace ft{
@@ -24,24 +24,31 @@ namespace ft{
         typedef avl_tree<key_type, mapped_type, node_type,key_compare, allocator_type> avl;
 
         typedef typename ft::iterator<value_type, node_type, avl>            iterator;
+        typedef typename ft::const_iterator<value_type, node_type, avl>      const_iterator;
         typedef size_t                                                  size_type;
 
         avl                                                             avl_inst;
-       
-       /* explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()){
-            
-        }*/
 
         map(){}
-        /*
-        template <class InputIterator>
-        map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()){
+        
+        /* ----- Iterators ----- */
 
+        iterator begin(){
+            node_type *node = NULL;
+            if(this->empty())
+                node = avl_inst.tmp_node;
+            else
+                node = avl_inst.getMinValue(avl_inst.root);
+
+            return iterator(node,&avl_inst);
         }
 
-        map(const map& x){
+        iterator end(){
+            node_type *node = avl_inst.tmp_node;
+            return iterator(node,&avl_inst,true);
+        }
 
-        }*/
+        /* ----- Modifiers ----- */
 
         // insert
 
@@ -95,25 +102,12 @@ namespace ft{
             }
         }
 
+        /* ----- Capacity ----- */
+
         bool    empty() const{
             return avl_inst.size == 0;
         }
-
-        iterator begin(){
-            node_type *node = NULL;
-            if(this->empty())
-                node = avl_inst.tmp_node;
-            else
-                node = avl_inst.getMinValue(avl_inst.root);
-
-            return iterator(node,&avl_inst);
-        }
-
-        iterator end(){
-            node_type *node = avl_inst.tmp_node;
-            return iterator(node,&avl_inst,true);
-        }
-
+        
         size_type size() const{
             return avl_inst.size;
         }

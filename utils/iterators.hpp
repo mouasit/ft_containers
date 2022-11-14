@@ -212,5 +212,47 @@ namespace ft{
             bool  past_last;
             bool  increase;
     };
+
+    template<typename Iterator>
+    class iterator_traits{
+        private:
+        public:
+        typedef typename Iterator::value_type value_type;
+        typedef typename Iterator::pointer    pointer;
+        typedef typename Iterator::reference    reference;
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    template <typename Iterator>
+    class reverse_iterator{
+        private:
+        Iterator    base_it;
+        public:
+        typedef Iterator                      iterator_type;
+        typedef typename Iterator::value_type value_type;
+        typedef typename Iterator::pointer    pointer;
+        typedef typename Iterator::reference  reference;
+
+        iterator_type base() const{
+            return this->base_it;
+        }    
+	    reverse_iterator& operator++();
+    };
 }
 #endif

@@ -25,6 +25,8 @@ namespace ft{
 
         typedef typename ft::iterator<value_type, node_type, avl>            iterator;
         typedef typename ft::const_iterator<value_type, node_type, avl>      const_iterator;
+        typedef typename ft::reverse_iterator<iterator>                      reverse_iterator;
+        typedef typename ft::iterator_traits<iterator>                       iterator_traits;
         typedef size_t                                                  size_type;
 
         avl                                                             avl_inst;

@@ -165,7 +165,7 @@ namespace ft{
         }
 
         void clear(){
-            
+            this->avl_inst.clear();
         }
     };
 

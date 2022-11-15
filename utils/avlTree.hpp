@@ -360,7 +360,7 @@ Node *createNode(ft::pair<T1,T2> data){
 	        std::swap(this->size, avl.size);
         }
 
-        void clear_tree(Node *root)
+        void clear(Node *root)
         {
             if (root == NULL)
                 return;

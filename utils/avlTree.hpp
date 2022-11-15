@@ -10,12 +10,12 @@ class avl_tree
     private:
 		typename Alloc::template rebind<Node>::other	_node_allocator;
     public:
-        Alloc  _allocator;
-        Node    *root;
-        Node    *node_insert;
-        Node    *tmp_node;
+        Alloc       _allocator;
+        Node        *root;
+        Node        *node_insert;
+        Node        *tmp_node;
         key_compare compare;
-        size_t  size;
+        size_t      size;
 
 
         avl_tree(){
@@ -335,12 +335,7 @@ Node *createNode(ft::pair<T1,T2> data){
         }
         return root;
     };
-        /*avl_tree(key_compare &compe){
-            this->root = NULL;
-            compare = compe;
-        };
-        ~avl_tree(){};*/
-        void    insert(const ft::pair<T1,T2> pair){
+    void    insert(const ft::pair<T1,T2> pair){
             if (root == NULL)
             {
                 root = createNode(pair);
@@ -353,6 +348,16 @@ Node *createNode(ft::pair<T1,T2> data){
         void  erase(T1 key){
 
             this->root = eraseHelper(this->root, key);
+        }
+
+        void    swap(avl_tree &avl)
+        {
+            std::swap(this->_allocator, avl._allocator);
+	        std::swap(this->root, avl.root);
+	        std::swap(this->node_insert, avl.node_insert);
+	        std::swap(this->tmp_node, avl.tmp_node);
+	        std::swap(this->compare, avl.compare);
+	        std::swap(this->size, avl.size);
         }
 
         Node *getMaxValue(Node *root)

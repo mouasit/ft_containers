@@ -85,6 +85,26 @@ namespace ft{
             return const_reverse_iterator(this->begin());
         }
 
+        /* ----- Capacity ----- */
+
+        bool    empty() const{
+            return avl_inst.size == 0;
+        }
+        
+        size_type size() const{
+            return avl_inst.size;
+        }
+
+        size_type max_size() const{
+            return avl_inst._allocator.max_size();
+        }
+        /* ----- Element access ----- */
+
+        mapped_type& operator[] (const key_type& k){
+            ft::pair<iterator,bool>     pair;
+            pair = this->insert(ft::make_pair(k,mapped_type()));
+            return pair.first->second;
+        }
 
         /* ----- Modifiers ----- */
 
@@ -140,18 +160,8 @@ namespace ft{
             }
         }
 
-        /* ----- Capacity ----- */
-
-        bool    empty() const{
-            return avl_inst.size == 0;
-        }
-        
-        size_type size() const{
-            return avl_inst.size;
-        }
-
-        size_type max_size() const{
-            return avl_inst._allocator.max_size();
+        void swap (map& x){
+            this->avl_inst.swap(x.avl_inst);
         }
     };
 

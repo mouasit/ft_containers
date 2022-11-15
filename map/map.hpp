@@ -163,6 +163,10 @@ namespace ft{
         void swap (map& x){
             this->avl_inst.swap(x.avl_inst);
         }
+
+        void clear(){
+            
+        }
     };
 
 }

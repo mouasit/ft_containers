@@ -360,6 +360,24 @@ Node *createNode(ft::pair<T1,T2> data){
 	        std::swap(this->size, avl.size);
         }
 
+        void clear_tree(Node *root)
+        {
+            if (root == NULL)
+                return;
+            clear(root->left);
+            clear(root->right);
+            this->_node_allocator.destroy(root);
+            this->_node_allocator.deallocate(root,1);
+        }
+        
+        void clear(void)
+        {
+            this->clear(this->root);
+            this->_root = NULL;
+            this->node_insert = NULL;
+	        this->_size = 0;
+        }
+
         Node *getMaxValue(Node *root)
         {
             Node *tmp = root;

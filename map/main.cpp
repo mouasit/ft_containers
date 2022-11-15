@@ -10,6 +10,6 @@ int main(){
         mymap.insert(ft::pair<int,int>(13,5));
         mymap.insert(ft::pair<int,int>(25,5));
         mymap.insert(ft::pair<int,int>(12,5));
+        std::cout << mymap.max_size() << std::endl;
 
-        
 }

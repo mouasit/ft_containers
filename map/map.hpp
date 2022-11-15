@@ -28,9 +28,9 @@ namespace ft{
         typedef typename ft::reverse_iterator<iterator>                      reverse_iterator;
         typedef typename ft::reverse_iterator<iterator>                      const_reverse_iterator;
         typedef typename ft::iterator_traits<iterator>                       iterator_traits;
-        typedef size_t                                                  size_type;
+        typedef size_t                                                       size_type;
 
-        avl                                                             avl_inst;
+        avl                                                                  avl_inst;
 
         map(){}
         
@@ -148,6 +148,10 @@ namespace ft{
         
         size_type size() const{
             return avl_inst.size;
+        }
+
+        size_type max_size() const{
+            return avl_inst._allocator.max_size();
         }
     };
 

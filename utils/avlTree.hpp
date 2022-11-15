@@ -8,9 +8,9 @@ template <typename T1, typename T2, typename Node , typename key_compare, typena
 class avl_tree
 {
     private:
-        Alloc  _allocator;
 		typename Alloc::template rebind<Node>::other	_node_allocator;
     public:
+        Alloc  _allocator;
         Node    *root;
         Node    *node_insert;
         Node    *tmp_node;

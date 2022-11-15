@@ -231,6 +231,10 @@ Node *createNode(ft::pair<T1,T2> data){
         return root;
     }
 
+    key_compare get_key_compare(){
+        return this->compare;
+    }
+
     
 
     Node   *eraseHelper(Node *root, T1 key)

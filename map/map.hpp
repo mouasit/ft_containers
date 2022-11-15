@@ -9,7 +9,7 @@
 #include "../utils/Node.hpp"
 
 namespace ft{
-    template <typename key, typename value, typename compare = std::less<key>,
+    template <typename key, typename value, typename Compare = std::less<key>,
     typename Alloc = std::allocator<ft::pair<key, value> > >
 
     class map{
@@ -17,7 +17,7 @@ namespace ft{
         public:
         typedef key                                                     key_type;
         typedef value                                                  mapped_type;
-        typedef compare                                                key_compare;
+        typedef Compare                                                key_compare;
         typedef typename ft::pair<key_type, mapped_type>                            value_type;
         typedef Alloc                                                  allocator_type;
         typedef Node<value_type>                                       node_type;
@@ -33,6 +33,19 @@ namespace ft{
         avl                                                                  avl_inst;
 
         map(){}
+        
+    class value_compare : std::binary_function<value_type, value_type, bool>
+	{
+		friend class map;
+	    protected:
+		    Compare	comp;
+
+		    value_compare(Compare c) : comp(c) { }
+	    public:
+		    bool	operator()(value_type const & x, value_type const & y) const {
+			return (comp(x.first, y.first));
+		    }
+	};
         
         /* ----- Iterators ----- */
 
@@ -166,6 +179,16 @@ namespace ft{
 
         void clear(){
             this->avl_inst.clear();
+        }
+
+        /* ----- Observers ----- */
+
+        key_compare key_comp() const{
+            return this->avl_inst.get_key_compare();
+        }
+
+        value_compare value_comp() const{
+            return (value_compare(this->key_comp()));
         }
     };
 

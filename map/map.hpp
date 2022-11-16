@@ -1,6 +1,7 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
+#include <cstddef>
 #include <iostream>
 #include <functional>
 #include "../utils/pair.hpp"
@@ -207,6 +208,23 @@ namespace ft{
         size_type count (const key_type& k) const{
             return this->avl_inst.check_key(k);
         }
+
+        iterator lower_bound (const key_type& k){
+            node_type *node = NULL;
+            if(this->count(k))
+                return this->find(k);
+            else
+                node =  this->avl_inst.getPlace(this->avl_inst.root,k);
+            if(node == NULL)
+                node = this->avl_inst.tmp_node;
+            return iterator(node,&avl_inst);    
+        }
+
+        /*
+            iterator upper_bound (const key_type& k){
+                return iterator(this->avl_inst.inorder_successor(this->avl_inst.root, k), &avl_inst);
+            }
+        */
 
         /* ----- Observers ----- */
 

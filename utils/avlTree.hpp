@@ -29,11 +29,11 @@ class avl_tree
         Node *successor = NULL;
         
         while (true) {
-            if (key < root->data.first) {
+            if (compare(key,root->data.first)) {
                 successor = root;
                 root = root->left;
             }
-            else if (key > root->data.first){
+            else if (compare(root->data.first,key)){
                     root = root->right;
                 }
                 else 
@@ -58,12 +58,12 @@ Node *inorder_predecessor(Node *root, T1 key){
     Node *predecessor = NULL;
 
   while (true) {
-      if (key < root->data.first)
-        root = root->left;
+      if (compare(key,root->data.first))
+            root = root->left;
 
-      else if (key > root->data.first){
-        predecessor = root;
-        root = root->right;
+      else if (compare(root->data.first, key)){
+            predecessor = root;
+            root = root->right;
       }
       else {
         if (root->left != NULL)
@@ -135,18 +135,49 @@ Node *createNode(ft::pair<T1,T2> data){
         newNode->height = updateHeight(newNode);
         return newNode;
     }
-        Node    *leftRotation(Node *root)
-        {
-            Node *tmp = root->right->left;
-            Node *newNode;
-            
-            root->right->left = root;
-            newNode = root->right;
-            newNode->left->right = tmp;
-            newNode->left->height = updateHeight(newNode->right);
-            newNode->height = updateHeight(newNode);
-            return newNode;
+    Node    *leftRotation(Node *root)
+    {
+        Node *tmp = root->right->left;
+        Node *newNode; 
+        
+        root->right->left = root;
+        newNode = root->right;
+        newNode->left->right = tmp;
+        newNode->left->height = updateHeight(newNode->right);
+        newNode->height = updateHeight(newNode);
+        return newNode;
+    }
+
+    Node *getPlace(Node *root,T1 key){
+        Node *successor = NULL;
+        
+        while (true) {
+            if (compare(key,root->data.first)) {
+                successor = root;
+                if(root->left == NULL)
+                    break;
+                else
+                    root = root->left;
+            }
+            else if (compare(root->data.first,key)){
+                    root = root->right;
+                }
+                else 
+                {
+                    if (root->right != NULL)
+                        successor = getMinValue(root->right);
+                    break;
+                }
+
+            if (root == NULL)
+                return NULL;
         }
+
+    if(successor)
+        return successor;
+    return NULL;
+        }
+
     Node    *search(T1 key)
     {
         Node    *tmp = this->root;

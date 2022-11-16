@@ -230,11 +230,24 @@ namespace ft{
                 node = this->avl_inst.tmp_node;
             return const_iterator(node,&avl_inst);    
         }
-        /*
-            iterator upper_bound (const key_type& k){
-                return iterator(this->avl_inst.inorder_successor(this->avl_inst.root, k), &avl_inst);
-            }
-        */
+
+         iterator upper_bound (const key_type& k){
+            node_type *node = NULL;
+
+            node =  this->avl_inst.getPlace(this->avl_inst.root,k);
+            if(node == NULL)
+                node = this->avl_inst.tmp_node;
+            return iterator(node,&avl_inst);
+         }
+
+        const_iterator upper_bound (const key_type& k) const{
+            node_type *node = NULL;
+
+            node =  this->avl_inst.getPlace(this->avl_inst.root,k);
+            if(node == NULL)
+                node = this->avl_inst.tmp_node;
+            return const_iterator(node,&avl_inst);
+         }
 
         /* ----- Observers ----- */
 

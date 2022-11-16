@@ -199,8 +199,19 @@ namespace ft{
             return iterator(node, &avl_inst);
         }
 
+        const_iterator find (const key_type& k) const{
+            node_type   *node = this->avl_inst.search(k);
+            return const_iterator(node, &avl_inst);
+        }
+
         size_type count (const key_type& k) const{
             return this->avl_inst.check_key(k);
+        }
+
+        /* ----- Observers ----- */
+
+        allocator_type get_allocator() const{
+            return this->avl_inst.get_allocator();
         }
     };
 

@@ -165,6 +165,11 @@ Node *createNode(ft::pair<T1,T2> data){
             tmp = this->tmp_node;
         return tmp;
     }
+
+    Alloc get_allocator() const
+    {
+        return this->_allocator;
+    }
     
     size_t  check_key(const T1 key) const
     {

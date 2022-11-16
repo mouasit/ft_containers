@@ -147,6 +147,22 @@ Node *createNode(ft::pair<T1,T2> data){
             newNode->height = updateHeight(newNode);
             return newNode;
         }
+    Node    *search(T1 key)
+    {
+        Node    *tmp = this->root;
+            
+        while (tmp != NULL && tmp->data.first != key)
+        {
+            if(compare(key,tmp->data.first))
+                tmp = tmp->left;
+            else if (compare(tmp->data.first,key))
+                tmp = tmp->right;
+
+        }
+        if(tmp == NULL)
+            tmp = this->tmp_node;
+        return tmp;
+    }
 
     Node    *insertHelper(Node *root, ft::pair<T1,T2> pair)
     {

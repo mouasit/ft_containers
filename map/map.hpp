@@ -18,7 +18,7 @@ namespace ft{
         typedef key                                                     key_type;
         typedef value                                                  mapped_type;
         typedef Compare                                                key_compare;
-        typedef typename ft::pair<key_type, mapped_type>                            value_type;
+        typedef typename ft::pair<key_type, mapped_type>               value_type;
         typedef Alloc                                                  allocator_type;
         typedef Node<value_type>                                       node_type;
         typedef avl_tree<key_type, mapped_type, node_type,key_compare, allocator_type> avl;
@@ -51,6 +51,7 @@ namespace ft{
 
         iterator begin(){
             node_type *node = NULL;
+
             if(this->empty())
                 node = avl_inst.tmp_node;
             else
@@ -190,6 +191,14 @@ namespace ft{
         value_compare value_comp() const{
             return (value_compare(this->key_comp()));
         }
+
+        /* ----- Operations ----- */
+
+        iterator find (const key_type& k){
+            node_type   *node = this->avl_inst.search(k);
+            return iterator(node, &avl_inst);
+        }
+
     };
 
 }

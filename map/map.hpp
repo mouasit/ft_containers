@@ -199,6 +199,9 @@ namespace ft{
             return iterator(node, &avl_inst);
         }
 
+        size_type count (const key_type& k) const{
+            return this->avl_inst.check_key(k);
+        }
     };
 
 }

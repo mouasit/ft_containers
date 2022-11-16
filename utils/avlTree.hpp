@@ -151,17 +151,37 @@ Node *createNode(ft::pair<T1,T2> data){
     {
         Node    *tmp = this->root;
             
-        while (tmp != NULL && tmp->data.first != key)
+        while (tmp != NULL)
         {
             if(compare(key,tmp->data.first))
                 tmp = tmp->left;
             else if (compare(tmp->data.first,key))
                 tmp = tmp->right;
+            else
+                return tmp;
 
         }
         if(tmp == NULL)
             tmp = this->tmp_node;
         return tmp;
+    }
+    
+    size_t  check_key(const T1 key) const
+    {
+        Node    *tmp = this->root;
+
+        while (tmp != NULL)
+        {
+            if(compare(key,tmp->data.first))
+                tmp = tmp->left;
+            else if (compare(tmp->data.first,key))
+                tmp = tmp->right;
+            else{
+                return 1;
+            }
+
+        }
+        return 0;
     }
 
     Node    *insertHelper(Node *root, ft::pair<T1,T2> pair)

@@ -1,8 +1,6 @@
 #ifndef AVL_TREE_HPP
 #define AVL_TREE_HPP
 
-
-#include <cstddef>
 #include <iostream>
 template <typename T1, typename T2, typename Node , typename key_compare, typename Alloc>
 class avl_tree
@@ -18,13 +16,21 @@ class avl_tree
         size_t      size;
 
 
-        avl_tree(){
-            this->size = 0;
+        avl_tree(){};
+
+        avl_tree(key_compare const &comp, Alloc const &alloc){
+            this->_allocator = alloc;
             this->root = NULL;
-            this->node_insert = NULL;
-            this->tmp_node = createNode(ft::pair<T1,T1>(T1(),T2()));
+            this->node_insert = 0;
+            this->tmp_node = createNode(ft::pair<T1,T2>(T1(),T2()));
+            this->compare = comp;
+            this->size = 0;
+            std::cout << 
         }
 
+        ~avl_tree(){
+            this->clear();
+        }
     Node *inorder_successor(Node *root, T1 key){
         Node *successor = NULL;
         

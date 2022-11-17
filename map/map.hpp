@@ -33,8 +33,18 @@ namespace ft{
 
         avl                                                                  avl_inst;
 
-        map(){}
-        
+        explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):avl_inst(comp,alloc){}
+
+        template <class InputIterator>  map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):avl_inst(comp,alloc){
+            this->insert(first,last);
+        }
+
+        map (const map& x): avl_inst(x.begin(),x.end()){
+            this->insert(x.begin(),x.end());
+        }
+
+        ~map(void){}
+
     class value_compare : std::binary_function<value_type, value_type, bool>
 	{
 		friend class map;
@@ -181,7 +191,7 @@ namespace ft{
 
         void clear(){
             this->avl_inst.clear();
-        }
+        } 
 
         /* ----- Observers ----- */
 
@@ -247,6 +257,22 @@ namespace ft{
             if(node == NULL)
                 node = this->avl_inst.tmp_node;
             return const_iterator(node,&avl_inst);
+         }
+
+         pair<const_iterator,const_iterator> equal_range (const key_type& k) const{
+            pair<const_iterator,const_iterator> pair;
+
+            pair.first = this->lower_bound(k);
+            pair.second = this->upper_bound(k);
+            return pair;
+         }
+
+         pair<iterator,iterator>    equal_range (const key_type& k){
+            pair<iterator,iterator> pair;
+
+            pair.first = this->lower_bound(k);
+            pair.second = this->upper_bound(k);
+            return pair;
          }
 
         /* ----- Observers ----- */

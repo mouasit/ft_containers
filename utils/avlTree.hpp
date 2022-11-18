@@ -31,6 +31,16 @@ class avl_tree
             this->clear();
         }
 
+        avl_tree &operator=(avl_tree const &avl)
+        {
+            if (this != &avl)
+            {
+                this->clear();
+                this->compare = avl.compare;
+            }
+
+            return *this;
+        }
     Node *inorder_successor(Node *root, T1 key) const{
         Node *successor = NULL;
         
@@ -327,7 +337,7 @@ Node *createNode(ft::pair<T1,T2> data){
             //leaf node 
             if (root->left == NULL && root->right == NULL)
             {
-                this->_node_allocator.destroy(root);
+               this->_node_allocator.destroy(root);
                 this->_node_allocator.deallocate(root,1);
                 this->size--;
                 return NULL;

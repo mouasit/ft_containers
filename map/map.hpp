@@ -39,7 +39,7 @@ namespace ft{
             this->insert(first,last);
         }
 
-        map (const map& x): avl_inst(x.begin(),x.end()){
+        map (const map& x): avl_inst(x.key_comp(),x.get_allocator()){
             this->insert(x.begin(),x.end());
         }
 
@@ -75,13 +75,10 @@ namespace ft{
             
             node_type *node = NULL;
             if(this->empty())
-                node = avl_inst.tmp_node;
+                node = this->avl_inst.tmp_node;
             else
-                node = avl_inst.getMinValue(avl_inst.root);
-
-            std::cout << "return" << std::endl;
+                node = this->avl_inst.getMinValue(avl_inst.root);
             return const_iterator(node,&avl_inst);
-
         }
 
         iterator end(){

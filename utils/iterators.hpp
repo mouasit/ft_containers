@@ -132,7 +132,7 @@ namespace ft{
             this->past_last = false;
         };
 
-        const_iterator(Node *node, Avl *avl_tree, bool past_last = false){
+        const_iterator(const Node *node, const Avl *avl_tree, const bool past_last = false){
             if(past_last)
                 this->past_last = true;
             this->increase = true;
@@ -215,8 +215,8 @@ namespace ft{
         ~const_iterator(){};
         
         private:
-            Avl   *avl_tree;
-            Node  *node;
+            Avl  const *avl_tree;
+            Node const *node;
             bool  past_last;
             bool  increase;
     };

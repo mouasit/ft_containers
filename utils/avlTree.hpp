@@ -25,13 +25,13 @@ class avl_tree
             this->tmp_node = createNode(ft::pair<T1,T2>(T1(),T2()));
             this->compare = comp;
             this->size = 0;
-            std::cout << 
         }
 
         ~avl_tree(){
             this->clear();
         }
-    Node *inorder_successor(Node *root, T1 key){
+
+    Node *inorder_successor(Node *root, T1 key) const{
         Node *successor = NULL;
         
         while (true) {
@@ -59,7 +59,7 @@ class avl_tree
     return NULL;
 }
 
-Node *inorder_predecessor(Node *root, T1 key){
+Node *inorder_predecessor(Node *root, T1 key) const{
 
     Node *predecessor = NULL;
 
@@ -309,11 +309,10 @@ Node *createNode(ft::pair<T1,T2> data){
         return root;
     }
 
-    key_compare get_key_compare(){
+    key_compare get_key_compare() const{
         return this->compare;
     }
 
-    
 
     Node   *eraseHelper(Node *root, T1 key)
     {
@@ -455,12 +454,12 @@ Node *createNode(ft::pair<T1,T2> data){
         void clear(void)
         {
             this->clear(this->root);
-            this->_root = NULL;
+            this->root = NULL;
             this->node_insert = NULL;
-	        this->_size = 0;
+	        this->size = 0;
         }
 
-        Node *getMaxValue(Node *root)
+        Node *getMaxValue(Node *root) const
         {
             Node *tmp = root;
 
@@ -470,7 +469,7 @@ Node *createNode(ft::pair<T1,T2> data){
             
         }
         
-        Node *getMinValue(Node *root)
+        Node *getMinValue(Node *root) const
         {
             Node *tmp = root;
 

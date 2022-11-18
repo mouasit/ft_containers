@@ -43,6 +43,16 @@ namespace ft{
             this->insert(x.begin(),x.end());
         }
 
+         map& operator= (const map& x){
+            if (this != &x)
+            {
+                this->avl_inst = x.avl_inst;
+                this->insert(x.begin(),x.end());
+            }
+
+            return *this;
+         }
+
         ~map(void){}
 
     class value_compare : std::binary_function<value_type, value_type, bool>

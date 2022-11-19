@@ -15,12 +15,12 @@ namespace ft{
         typedef value_type* pointer;
         typedef value_type& reference;
         typedef ptrdiff_t     difference_type;
-        iterator(){
+        iterator():avl_tree(),node(){
             this->increase = true;
             this->past_last = false;
         };
 
-        iterator(Node *node, Avl *avl_tree, bool past_last = false){
+        iterator(Node *node, Avl *avl_tree, bool past_last = false):avl_tree(avl_tree),node(node){
             if(past_last)
                 this->past_last = true;
             this->increase = true;
@@ -28,7 +28,7 @@ namespace ft{
             this->node = node;
         }
 
-        iterator(iterator const & src)
+        iterator(iterator const & src):avl_tree(src.avl_tree),node(src.node)
         {
             this->avl_tree = src.avl_tree;
             this->node = src.node;
@@ -97,7 +97,7 @@ namespace ft{
             return *this;
         }
 
-        bool operator== (const iterator &it){
+        bool operator== (const iterator &it) const{
             return this->node == it.node;
         }
         
@@ -127,18 +127,28 @@ namespace ft{
         
         typedef const value_type* pointer;
         typedef const value_type& reference;
-        const_iterator(){
+        const_iterator():avl_tree(),node(){
             this->increase = true;
             this->past_last = false;
         };
 
-        const_iterator(const Node *node, const Avl *avl_tree, const bool past_last = false){
+        const_iterator(const Node *node, const Avl *avl_tree, const bool past_last = false):avl_tree(avl_tree),node(node){
             if(past_last)
                 this->past_last = true;
             this->increase = true;
             this->avl_tree = avl_tree;
             this->node = node;
         }
+
+        const_iterator(const_iterator const & src):avl_tree(src.avl_tree),node(src.node)
+        {
+            this->avl_tree = src.avl_tree;
+            this->node = src.node;
+            this->past_last = src.past_last;
+            this->increase = src.increase;
+        }
+
+        ~const_iterator(){};
         
         const_iterator operator= (const const_iterator &it){
             this->node = it.node;
@@ -211,8 +221,6 @@ namespace ft{
 
             return this->node->data;
         }
-
-        ~const_iterator(){};
         
         private:
             Avl  const *avl_tree;
@@ -273,16 +281,19 @@ namespace ft{
         }
 
         reference operator*() const{
-            Iterator temp = this->base_it;
-            
-            //return (*(--temp));
+            iterator_type temp = this->base_it;
             return (*(temp));
         }
 
-        pointer operator->(){
+        pointer operator->() const{
             return (&(this->operator*()));
         }
     };
+        
+        template<class Iterator1, class Iterator2 >
+        bool operator==( const ft::reverse_iterator<Iterator1>& lhs, const ft::reverse_iterator<Iterator2>& rhs ){
+            return (lhs.base() == rhs.base());
+        }
 
         template<class Iterator1, class Iterator2 >
         bool operator!=( const ft::reverse_iterator<Iterator1>& lhs, const ft::reverse_iterator<Iterator2>& rhs ){

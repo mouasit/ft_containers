@@ -15,16 +15,9 @@ class avl_tree
         key_compare compare;
         size_t      size;
 
-
         avl_tree(){};
 
-        avl_tree(key_compare const &comp, Alloc const &alloc){
-            this->_allocator = alloc;
-            this->root = NULL;
-            this->node_insert = 0;
-            this->tmp_node = createNode(ft::pair<T1,T2>(T1(),T2()));
-            this->compare = comp;
-            this->size = 0;
+        avl_tree(key_compare const &comp, Alloc const &alloc):_allocator(alloc),root(),node_insert(0),tmp_node(this->createNode(ft::pair<T1,T2>(T1(),T2()))),compare(comp),size(0){
         }
 
         ~avl_tree(){

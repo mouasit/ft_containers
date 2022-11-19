@@ -239,6 +239,8 @@ namespace ft{
 
         reverse_iterator(iterator_type it):base_it(it){}
 
+        template <class Iter>  reverse_iterator (const reverse_iterator<Iter>& rev_it):base_it(rev_it.base()){}
+
         ~reverse_iterator(){}
         
         operator const_reverse_iterator<Iterator>(){
@@ -274,14 +276,40 @@ namespace ft{
 
         reference operator*() const{
             Iterator temp = this->base_it;
-            return (*(--temp));
+            
+            //return (*(--temp));
+            return (*(temp));
         }
 
         pointer operator->(){
-            return &this->operator*();
+            return (&(this->operator*()));
+        }
+    };
+
+        template<class Iterator1, class Iterator2 >
+        bool operator!=( const ft::reverse_iterator<Iterator1>& lhs, const ft::reverse_iterator<Iterator2>& rhs ){
+            return (lhs.base() != rhs.base());
         }
         
-    };
+        template<class Iterator1, class Iterator2 >
+        bool operator >( const ft::reverse_iterator<Iterator1>& lhs, const ft::reverse_iterator<Iterator2>& rhs ){
+            return (lhs.base() < rhs.base());
+        }
+
+        template<class Iterator1, class Iterator2 >
+        bool operator >= ( const ft::reverse_iterator<Iterator1>& lhs, const ft::reverse_iterator<Iterator2>& rhs ){
+            return (lhs.base() <= rhs.base());
+        }
+
+        template<class Iterator1, class Iterator2 >
+        bool operator < ( const ft::reverse_iterator<Iterator1>& lhs, const ft::reverse_iterator<Iterator2>& rhs ){
+            return (lhs.base() > rhs.base());
+        }
+
+        template<class Iterator1, class Iterator2 >
+        bool operator <= ( const ft::reverse_iterator<Iterator1>& lhs, const ft::reverse_iterator<Iterator2>& rhs ){
+            return (lhs.base() >= rhs.base());
+        }
 
 
     template <typename Iterator>
@@ -337,9 +365,6 @@ namespace ft{
         }
     };
 
-
-
-
     template<typename Iterator>
     class iterator_traits{
         private:
@@ -350,5 +375,6 @@ namespace ft{
         typedef typename Iterator::difference_type  difference_type;
 
     };
+
 }
 #endif

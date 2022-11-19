@@ -97,15 +97,16 @@ namespace ft{
         }
 
         const_iterator end() const{
-            node_type *node = avl_inst.tmp_node;
+            node_type *node = this->avl_inst.tmp_node;
             return const_iterator(node,&avl_inst,true);
         }
 
         reverse_iterator rbegin(){
+            
             return reverse_iterator(this->end());
         }
 
-        const reverse_iterator rbegin() const{
+        const const_reverse_iterator rbegin() const{
             return const_reverse_iterator(this->end());
         }
 
@@ -113,7 +114,7 @@ namespace ft{
             return reverse_iterator(this->begin());
         }
 
-        const_reverse_iterator rend() const{
+       const_reverse_iterator rend() const{
             return const_reverse_iterator(this->begin());
         }
 

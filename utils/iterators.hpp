@@ -230,10 +230,8 @@ namespace ft{
         Iterator    base_it;
         public:
         typedef Iterator                            iterator_type;
-        typedef typename Iterator::value_type       value_type;
         typedef typename Iterator::pointer          pointer;
         typedef typename Iterator::reference        reference;
-        typedef typename Iterator::difference_type  difference_type;
 
         reverse_iterator():base_it(){};
 
@@ -310,60 +308,6 @@ namespace ft{
         bool operator <= ( const ft::reverse_iterator<Iterator1>& lhs, const ft::reverse_iterator<Iterator2>& rhs ){
             return (lhs.base() >= rhs.base());
         }
-
-
-    template <typename Iterator>
-    class const_reverse_iterator{
-        private:
-        Iterator                                           base_it;
-        public:
-        typedef Iterator                                  iterator_type;
-        typedef typename Iterator::value_type             value_type;
-        typedef typename Iterator::pointer                pointer;
-        typedef const typename Iterator::reference        reference;
-        typedef const typename Iterator::difference_type  difference_type;
-
-        const_reverse_iterator():base_it(){};
-
-        const_reverse_iterator(iterator_type it):base_it(it){}
-
-        ~const_reverse_iterator(){}
-
-        iterator_type base() const{
-            return this->base_it;
-        }
-
-	    const_reverse_iterator& operator++(void){
-            this->base_it--;
-            return *this;
-        }
-
-        const_reverse_iterator operator++(int){
-            const_reverse_iterator copy = *this;
-            this->base_it--;
-            return copy;
-        }
-
-        const_reverse_iterator& operator--(void){
-            this->base_it++;
-            return *this;
-        }
-
-        const_reverse_iterator operator--(int){
-            const_reverse_iterator copy = *this;
-            this->base_it++;
-            return copy;
-        }
-
-        reference operator*() const{
-            Iterator temp = this->base_it;
-            return (*(--temp));
-        }
-
-        pointer operator->(){
-            return &this->operator*();
-        }
-    };
 
     template<typename Iterator>
     class iterator_traits{

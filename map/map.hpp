@@ -229,6 +229,7 @@ namespace ft{
 
         iterator lower_bound (const key_type& k){
             node_type *node = NULL;
+
             if(this->count(k))
                 return this->find(k);
             else

@@ -7,7 +7,7 @@ class avl_tree
 {
     private:
 		typename Alloc::template rebind<Node>::other	_node_allocator;
-	    Alloc		_alloc;
+
         
     public:
         Alloc       _allocator;
@@ -159,7 +159,7 @@ Node *createNode(ft::pair<T1,T2> data){
         return newNode;
     }
 
-    Node *getPlace(Node *root,T1 key){
+    Node *getPlace(Node *root,T1 key) const{
         Node *successor = NULL;
         
         while (true) {
@@ -189,7 +189,7 @@ Node *createNode(ft::pair<T1,T2> data){
     return NULL;
         }
 
-    Node    *search(T1 key)
+    Node    *search(T1 key) const
     {
         Node    *tmp = this->root;
             
@@ -360,8 +360,8 @@ Node *createNode(ft::pair<T1,T2> data){
                 }
                 // node with two children
                 else{
-                    this->_alloc.destroy(&root->data);
-                    this->_alloc.construct(&root->data, this->inorder_successor(root,key)->data);
+                    this->_allocator.destroy(&root->data);
+                    this->_allocator.construct(&root->data, this->inorder_successor(root,key)->data);
 		            root->right = this->eraseHelper(root->right, root->data.first);
                 }
             }

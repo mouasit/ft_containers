@@ -14,7 +14,9 @@ namespace ft{
         typedef T           value_type;
         typedef value_type* pointer;
         typedef value_type& reference;
-        typedef ptrdiff_t     difference_type;
+        typedef ptrdiff_t   difference_type;
+	    typedef std::bidirectional_iterator_tag	iterator_category;
+
         iterator():avl_tree(),node(){
             this->increase = true;
             this->past_last = false;
@@ -107,11 +109,11 @@ namespace ft{
             return this->node != it.node;
         }
 
-        pointer operator->(void){
+        pointer operator->(void) const{
             return &this->node->data;
         }
         
-        reference operator*(void){
+        reference operator*(void) const{
 
             return this->node->data;
         }
@@ -126,10 +128,12 @@ namespace ft{
     template <typename T, typename Node, typename Avl>
     class const_iterator{
         public:
-        typedef T           value_type;
-        typedef const value_type* pointer;
-        typedef const value_type& reference;
-        typedef ptrdiff_t     difference_type;
+        typedef T                               value_type;
+        typedef const                           value_type* pointer;
+        typedef const                           value_type& reference;
+        typedef ptrdiff_t                       difference_type;
+	    typedef std::bidirectional_iterator_tag	iterator_category;
+
         
         const_iterator():avl_tree(),node(){
             this->increase = true;
@@ -220,11 +224,11 @@ namespace ft{
             return this->node != it.node;
         }
 
-        pointer operator->(void){
+        pointer operator->(void) const{
             return &this->node->data;
         }
         
-        reference operator*(void){
+        reference operator*(void) const{
 
             return this->node->data;
         }
@@ -242,9 +246,12 @@ namespace ft{
         private:
         Iterator    base_it;
         public:
-        typedef Iterator                            iterator_type;
-        typedef typename Iterator::pointer          pointer;
-        typedef typename Iterator::reference        reference;
+        typedef Iterator                                iterator_type;
+        typedef typename Iterator::pointer              pointer;
+        typedef typename Iterator::reference            reference;
+        typedef	typename Iterator::iterator_category	iterator_category;
+        typedef typename Iterator::difference_type      difference_type;
+
 
         reverse_iterator():base_it(){};
 
@@ -330,6 +337,7 @@ namespace ft{
         typedef typename Iterator::pointer          pointer;
         typedef typename Iterator::reference        reference;
         typedef typename Iterator::difference_type  difference_type;
+        typedef typename Iterator::iterator_category iterator_category;
 
     };
 

@@ -174,7 +174,7 @@ namespace ft{
             this->avl_inst.erase(position->first);
         }
 
-        size_type erase (const key_type& k){
+        size_type erase (key_type const & k){
             const size_type size = this->avl_inst.size;
             
             this->avl_inst.erase(k);

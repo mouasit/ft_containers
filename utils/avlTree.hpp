@@ -7,6 +7,8 @@ class avl_tree
 {
     private:
 		typename Alloc::template rebind<Node>::other	_node_allocator;
+	    Alloc		_alloc;
+        
     public:
         Alloc       _allocator;
         Node        *root;
@@ -339,6 +341,7 @@ Node *createNode(ft::pair<T1,T2> data){
             //node with one child only
 
             else{
+                
                 if (root->left == NULL)
                 {
                     Node *tmp = root->right;
@@ -357,9 +360,9 @@ Node *createNode(ft::pair<T1,T2> data){
                 }
                 // node with two children
                 else{
-                    Node *maxValue = getMaxValue(root->left);
-                    root->data.first = maxValue->data.first;
-                    root->left = eraseHelper(root->left, maxValue->data.first);
+                    this->_alloc.destroy(&root->data);
+                    this->_alloc.construct(&root->data, this->inorder_successor(root,key)->data);
+		            root->right = this->eraseHelper(root->right, root->data.first);
                 }
             }
         }
@@ -430,7 +433,6 @@ Node *createNode(ft::pair<T1,T2> data){
         }
 
         void  erase(T1 key){
-
             this->root = eraseHelper(this->root, key);
         }
 

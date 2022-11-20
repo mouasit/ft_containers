@@ -1,16 +1,37 @@
 #include "map.hpp"
 #include <map>
+#include <iterator>
 #include "../utils/pair.hpp"
 int main(){
-        ft::map<int,char> mymap;
+        std::map<char, int> m;
+        ft::map<char, int> ft_m;
+        std::map<char, int>::iterator it;
+        ft::map<char, int>::iterator ft_it;
 
-        mymap.insert(ft::pair<int,char>(1,2));
-        mymap.insert(ft::pair<int,char>(2,2));
-        mymap.insert(ft::pair<int,char>(3,2));
+        ft_m['a'] = 10;
+        ft_m['b'] = 20;
+        ft_m['c'] = 30;
+        ft_m['d'] = 40;
+        ft_m['e'] = 50;
+        ft_m['f'] = 60;
 
-        ft::map<int, char>::reverse_iterator my_rit2(mymap.end());
-        ft::map<int, char>::const_reverse_iterator c_it;
+        m['a'] = 10;
+        m['b'] = 20;
+        m['c'] = 30;
+        m['d'] = 40;
+        m['e'] = 50;
+        m['f'] = 60;
 
-        c_it = my_rit2;
-        std::cout << c_it->first << std::endl;
+        it = m.find('b');
+        ft_it = ft_m.find('b');
+
+        m.erase(it);
+        ft_m.erase(ft_it);
+        
+        it = m.end();
+        ft_it = ft_m.end();
+
+        std::cout << "m: " << it->first << " ft_m: " << ft_it->first << std::endl;
+
 }
+        

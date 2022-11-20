@@ -20,9 +20,7 @@ namespace ft{
             this->past_last = false;
         };
 
-        iterator(Node *node, Avl *avl_tree, bool past_last = false):avl_tree(avl_tree),node(node){
-            if(past_last)
-                this->past_last = true;
+        iterator(Node *node, Avl *avl_tree, bool past_last = false):avl_tree(avl_tree),node(node),past_last(past_last){
             this->increase = true;
             this->avl_tree = avl_tree;
             this->node = node;
@@ -39,12 +37,13 @@ namespace ft{
         ~iterator(){};
 
         operator const_iterator<value_type,Node, Avl>(){
-            return const_iterator<value_type,Node, Avl>(this->node, this->avl_tree);
+            return const_iterator<value_type,Node, Avl>(this->node, this->avl_tree,this->past_last);
         }
         
         iterator operator= (const iterator &it){
             this->node = it.node;
             this->avl_tree = it.avl_tree;
+            this->past_last =it.past_last;
             return *this;
         }
 
@@ -81,7 +80,9 @@ namespace ft{
                 this->past_last = false;
             }
             else
+            {
                 this->node = this->avl_tree->inorder_predecessor(this->avl_tree->root, this->node->data.first);
+            }
             return copy;
         }
 
@@ -89,6 +90,7 @@ namespace ft{
         iterator operator--(void){
             if(this->past_last)
             {
+                
                 this->node = this->avl_tree->getMaxValue(this->avl_tree->root);
                 this->past_last = false;
             }
@@ -120,21 +122,21 @@ namespace ft{
             bool  past_last;
             bool  increase;
     };
-    
-    template <typename value_type, typename Node, typename Avl>
+
+    template <typename T, typename Node, typename Avl>
     class const_iterator{
         public:
-        
+        typedef T           value_type;
         typedef const value_type* pointer;
         typedef const value_type& reference;
+        typedef ptrdiff_t     difference_type;
+        
         const_iterator():avl_tree(),node(){
             this->increase = true;
             this->past_last = false;
         };
 
-        const_iterator(const Node *node, const Avl *avl_tree, const bool past_last = false):avl_tree(avl_tree),node(node){
-            if(past_last)
-                this->past_last = true;
+        const_iterator ( const Node *node, const Avl *avl_tree,const bool past_last = false):avl_tree(avl_tree),node(node),past_last(past_last){
             this->increase = true;
             this->avl_tree = avl_tree;
             this->node = node;
@@ -149,13 +151,14 @@ namespace ft{
         }
 
         ~const_iterator(){};
+
         
         const_iterator operator= (const const_iterator &it){
             this->node = it.node;
             this->avl_tree = it.avl_tree;
+            this->past_last = it.past_last;
             return *this;
         }
-
 
         const_iterator operator++(int){
 
@@ -189,7 +192,9 @@ namespace ft{
                 this->past_last = false;
             }
             else
+            {
                 this->node = this->avl_tree->inorder_predecessor(this->avl_tree->root, this->node->data.first);
+            }
             return copy;
         }
 
@@ -201,11 +206,13 @@ namespace ft{
                 this->past_last = false;
             }
             else
+            {
                 this->node = this->avl_tree->inorder_predecessor(this->avl_tree->root, this->node->data.first);
+            }
             return *this;
         }
 
-        bool operator== (const const_iterator &it){
+        bool operator== (const const_iterator &it) const{
             return this->node == it.node;
         }
         
@@ -217,20 +224,18 @@ namespace ft{
             return &this->node->data;
         }
         
-       reference operator*(void){
+        reference operator*(void){
 
             return this->node->data;
         }
         
         private:
-            Avl  const *avl_tree;
-            Node const *node;
+            const Avl   *avl_tree;
+            const Node  *node;
             bool  past_last;
             bool  increase;
     };
 
-    template<typename Iterator>
-    class const_reverse_iterator;
 
     template <typename Iterator>
     class reverse_iterator{
@@ -243,15 +248,11 @@ namespace ft{
 
         reverse_iterator():base_it(){};
 
-        reverse_iterator(iterator_type it):base_it(it){}
+        explicit reverse_iterator(iterator_type it):base_it(it){}
 
-        template <class Iter>  reverse_iterator (const reverse_iterator<Iter>& rev_it):base_it(rev_it.base()){}
+        template <class Iter>  reverse_iterator (reverse_iterator<Iter> const & rev_it):base_it(rev_it.base()){}
 
         ~reverse_iterator(){}
-        
-        operator const_reverse_iterator<Iterator>(){
-            return const_reverse_iterator<Iterator>(this->base_it);
-        }
 
         iterator_type base() const{
             return this->base_it;
@@ -282,11 +283,12 @@ namespace ft{
 
         reference operator*() const{
             iterator_type temp = this->base_it;
-            return (*(temp));
+            return (*(--temp));
         }
 
         pointer operator->() const{
-            return (&(this->operator*()));
+            iterator_type temp = this->base_it;
+            return ((--temp).operator->());
         }
     };
         

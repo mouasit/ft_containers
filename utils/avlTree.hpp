@@ -161,14 +161,12 @@ Node *createNode(ft::pair<T1,T2> data){
 
     Node *getPlace(Node *root,T1 key) const{
         Node *successor = NULL;
+
         
-        while (true) {
+        while (root != NULL) {
             if (compare(key,root->data.first)) {
                 successor = root;
-                if(root->left == NULL)
-                    break;
-                else
-                    root = root->left;
+                root = root->left;
             }
             else if (compare(root->data.first,key)){
                     root = root->right;
@@ -179,13 +177,12 @@ Node *createNode(ft::pair<T1,T2> data){
                         successor = getMinValue(root->right);
                     break;
                 }
-
-            if (root == NULL)
-                return NULL;
         }
 
     if(successor)
+    {
         return successor;
+    }
     return NULL;
         }
 

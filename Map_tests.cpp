@@ -2129,9 +2129,9 @@ int main()
     std::cout << std::endl;
 
 
-    std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
-    TEST_CASE(testAllocatorMethodes)
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
+    // TEST_CASE(testAllocatorMethodes)
+    // std::cout << std::endl;
 /*
     std::cout << YELLOW << "Testing Retional Operators; " << RESET << std::endl;
     TEST_CASE(testRetionalOperators);

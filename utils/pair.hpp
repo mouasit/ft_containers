@@ -2,28 +2,27 @@
 #define PAIR_HPP
 
 namespace ft{
-    template <typename T1, typename T2>
-    class pair
+    template <class T1, class T2>
+    struct pair
     {
-        private:
-        public:
-            T1      first;
-            T2      second;
-        pair(void):first(),second(){};
+        typedef T1 first_type;
+        typedef T2 second_type;
 
-        template<class U, class V> 
-        pair (const pair<U,V>& pr): first(pr.first), second(pr.second){};
+        first_type first;
+        second_type second;
 
-        pair(const T1 first, const T2 second){
-            this->first = first;
-            this->second = second;
-        }
-        
-        pair &operator=(const pair &pair)
+        pair() : first(), second(){}
+
+        template<class U, class V>
+        pair (const pair<U,V>& pr) : first(pr.first), second(pr.second) {} 
+
+        pair (const first_type& a, const second_type& b) :first(a), second(b) {}
+
+        pair& operator= (const pair &pr)
         {
-            this->first = pair.first;
-            this->second = pair.second;
-            return *this;
+            this->first = pr.first;
+            this->second = pr.second;
+            return (*this);
         }
     };
     template <typename T1, typename T2>

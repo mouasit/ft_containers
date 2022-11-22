@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "iterator.hpp"
+#include "../utils/reverse_iterator.hpp"
 
 
 
@@ -24,24 +25,40 @@ namespace ft{
     class vector{
         public:
             typedef T                                               value_type;
-            typedef Alloc                                           allocation_type;
+            typedef Alloc                                           allocator_type;
             typedef size_t                                          size_type;
-            typedef typename allocation_type::reference             reference;
-            typedef typename allocation_type::const_reference       const_reference;
+            typedef typename allocator_type::reference             reference;
+            typedef typename allocator_type::const_reference       const_reference;
             typedef typename ft::iterator<T>                        iterator;
-            typedef typename ft::const_iterator<T>                  const_iterator;
+            typedef typename ft::iterator<const T>                  const_iterator;
             typedef typename ft::reverse_iterator<T>                reverse_iterator;
-    
-            vector()
-                : _array(NULL), _size(0), _capacity(0){};
 
-            vector(const size_type len,const value_type& val = value_type(),const allocation_type& alloc = allocation_type())
-                : _array(NULL),_allocation(alloc), _size(len), _capacity(len){
+            vector(){};
+            
+            explicit vector (const allocator_type& alloc = allocator_type()): _array(), _allocation(alloc), _size(), _capacity(){};
 
-            this->_array = this->_allocation.allocate(len);
-            for (size_type i = 0; i < len; i++)
-                this->_allocation.construct(this->_array + i, val);
-        };
+            explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
+                    : _array(), _allocation(alloc), _size(n), _capacity(n)
+            {
+                size_type i = 0;
+
+                this->_array = this->_alloc.allocate(n);
+                while(i < n)
+                {
+                    this->_alloc.construct(this->_array + i, val);
+                    i++;
+                }
+            };
+
+            // template <class InputIterator>
+            //     vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()): _array(), _allocation(alloc), _size(), _capacity(){}
+            vector(vector  &x):_array(), _allocation(x._allocation), _size(x._size), _capacity(x._capacity){
+                	
+                    this->_array = this->_alloc.allocate(this->_size);
+	                for (size_type i = 0; i < this->_size; i++) {
+		                this->_alloc.construct(this->_array + i, *(x._array + i));
+	            }
+            }
             ~vector(){};
 
             // ITERATOR
@@ -312,10 +329,9 @@ namespace ft{
                     range++;
                 return range;
             }
-
             private:
                 value_type     *_array;
-                Alloc  _allocation;
+                allocator_type  _allocation;
                 size_type _size;
                 size_type _capacity;
     };

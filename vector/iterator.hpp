@@ -7,11 +7,11 @@ namespace ft{
     template <typename T>
     class iterator{
         public:
+	        typedef std::random_access_iterator_tag	iterator_category;
             typedef T                               value_type;
             typedef T*                              pointer;
 	        typedef T&								reference;
 	        typedef ptrdiff_t						difference_type;
-	        typedef std::random_access_iterator_tag	iterator_category;
             	
             iterator(void):ptr(){};
 	        iterator(iterator const & src):ptr(src.ptr){};
@@ -28,17 +28,20 @@ namespace ft{
                 return *this;
             };
 
-            bool operator != (const iterator val){return this->ptr != val.ptr;}
-            bool operator == (const iterator val){return this->ptr == val.ptr;}
-            bool operator > (const iterator val){return this->ptr > val.ptr;}
-            bool operator < (const iterator val){return this->ptr < val.ptr;}
-            bool operator >= (const iterator val){return this->ptr >= val.ptr;}
-            bool operator <= (const iterator val){return this->ptr <= val.ptr;}
+            bool operator != (const iterator val) const{return this->ptr != val.ptr;}
+            bool operator == (const iterator val) const{return this->ptr == val.ptr;}
+            bool operator > (const iterator val) const{return this->ptr > val.ptr;}
+            bool operator < (const iterator val) const{return this->ptr < val.ptr;}
+            bool operator >= (const iterator val) const{return this->ptr >= val.ptr;}
+            bool operator <= (const iterator val) const{return this->ptr <= val.ptr;}
 
 
-            iterator operator + (int n){return iterator(this->ptr + n);}
-            iterator operator - (int n){return iterator(this->ptr - n);}
-	        difference_type	operator - (iterator const & rhs) const;
+            iterator operator + (int n)const {return iterator(this->ptr + n);}
+            iterator operator - (int n)const {return iterator(this->ptr - n);}
+            difference_type	operator - (iterator const & rhs) const
+            {
+                return (this->ptr - rhs.ptr);
+            }
             
 
 
@@ -61,8 +64,8 @@ namespace ft{
                 return copy;
             }
             
-            value_type& operator* (){return *this->ptr;}
-            reference	operator[](difference_type n) const{return (*(this->ptr + n));};
+            value_type& operator* () const{return *this->ptr;}
+            reference	operator[] (difference_type n) const{return (*(this->ptr + n));};
             pointer		operator->(void) const{return (this->_ptr);};
 
 
@@ -83,11 +86,6 @@ namespace ft{
         iterator<T>	operator + ( typename iterator<T>::difference_type n, iterator<T> const & rhs)
         {
 	        return (rhs + n);
-        }
-    template<class T>
-        typename iterator<T>::difference_type	iterator<T>::operator - (iterator const & rhs) const
-        {
-	        return (this->_ptr - rhs._ptr);
         }
 }
 

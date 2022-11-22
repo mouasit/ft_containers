@@ -4,11 +4,8 @@
 #include <iostream>
 #include "iterator.hpp"
 #include "../utils/reverse_iterator.hpp"
-
-
-
-
-
+#include "../utils/is_integral.hpp"
+#include "../utils/enable_if.hpp"
 /* ----------------------------- WARNING !!  ---------------------------------
 
     Issues should fix:
@@ -31,10 +28,10 @@ namespace ft{
             typedef typename allocator_type::const_reference       const_reference;
             typedef typename ft::iterator<T>                        iterator;
             typedef typename ft::iterator<const T>                  const_iterator;
-            typedef typename ft::reverse_iterator<T>                reverse_iterator;
+            typedef typename ft::reverse_iterator<iterator>         reverse_iterator;
+            typedef typename ft::reverse_iterator<const_iterator>   const_reverse_iterator;
 
-            vector(){};
-            
+
             explicit vector (const allocator_type& alloc = allocator_type()): _array(), _allocation(alloc), _size(), _capacity(){};
 
             explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
@@ -42,16 +39,14 @@ namespace ft{
             {
                 size_type i = 0;
 
-                this->_array = this->_alloc.allocate(n);
+                this->_array = this->_allocation.allocate(n);
                 while(i < n)
                 {
-                    this->_alloc.construct(this->_array + i, val);
+                    this->_allocation.construct(this->_array + i, val);
                     i++;
                 }
             };
-
-            // template <class InputIterator>
-            //     vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()): _array(), _allocation(alloc), _size(), _capacity(){}
+            
             vector(vector  &x):_array(), _allocation(x._allocation), _size(x._size), _capacity(x._capacity){
                 	
                     this->_array = this->_alloc.allocate(this->_size);
@@ -59,6 +54,16 @@ namespace ft{
 		                this->_alloc.construct(this->_array + i, *(x._array + i));
 	            }
             }
+                template< class InputIterator>
+            	vector(InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last, allocator_type const & alloc = allocator_type())
+                    :_array(), _allocation(alloc), _size(), _capacity()
+                    {
+                        this->_size = this->_capacity = std::distance(first, last);
+                        this->_array = this->_alloc.allocate(this->_capacity);
+                        for (size_type i = 0; first != last; ++first, ++i) {
+                            this->_alloc.construct(this->_array + i, *first);
+                            }
+}
             ~vector(){};
 
             // ITERATOR

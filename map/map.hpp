@@ -8,6 +8,8 @@
 #include "../utils/avlTree.hpp"
 #include "../utils/iterators.hpp"
 #include "../utils/Node.hpp"
+#include "../utils/lexicographical_compare.hpp"
+#include "../utils/equal.hpp"
 
 namespace ft{
     template <typename key, typename value, typename Compare = std::less<key>,
@@ -19,7 +21,7 @@ namespace ft{
         typedef key                                                     key_type;
         typedef value                                                  mapped_type;
         typedef Compare                                                key_compare;
-        typedef typename ft::pair<const key_type, mapped_type>               value_type;
+        typedef typename ft::pair<const key_type, mapped_type>         value_type;
         typedef Alloc                                                  allocator_type;
         typedef Node<value_type>                                       node_type;
         typedef avl_tree<key_type, mapped_type, node_type,key_compare, allocator_type> avl;
@@ -298,6 +300,43 @@ namespace ft{
             return this->avl_inst.get_allocator();
         }
     };
+
+    template<class Key, class T, class Comp, class Alloc>
+bool	operator==(map<Key, T, Comp, Alloc> const & lhs, map<Key, T, Comp, Alloc> const & rhs)
+{
+	return ((lhs.size() == rhs.size()) && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+}
+
+template<class Key, class T, class Comp, class Alloc>
+bool	operator!=(map<Key, T, Comp, Alloc> const & lhs, map<Key, T, Comp, Alloc> const & rhs)
+{
+	return (!(lhs == rhs));
+}
+
+template<class Key, class T, class Comp, class Alloc>
+bool	operator<(map<Key, T, Comp, Alloc> const & lhs, map<Key, T, Comp, Alloc> const & rhs)
+{
+	return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+}
+
+template<class Key, class T, class Comp, class Alloc>
+bool	operator<=(map<Key, T, Comp, Alloc> const & lhs, map<Key, T, Comp, Alloc> const & rhs)
+{
+	return (!(rhs < lhs));
+}
+
+template<class Key, class T, class Comp, class Alloc>
+bool	operator>(map<Key, T, Comp, Alloc> const & lhs, map<Key, T, Comp, Alloc> const & rhs)
+{
+	return (rhs < lhs);
+}
+
+template<class Key, class T, class Comp, class Alloc>
+bool	operator>=(map<Key, T, Comp, Alloc> const & lhs, map<Key, T, Comp, Alloc> const & rhs)
+{
+	return (!(lhs < rhs));
+}
+
 
 }
 #endif

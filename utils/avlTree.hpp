@@ -24,6 +24,8 @@ class avl_tree
 
         ~avl_tree(){
             this->clear();
+            this->_node_allocator.destroy(this->tmp_node);
+            this->_node_allocator.deallocate(this->tmp_node,1);
         }
 
         avl_tree &operator=(avl_tree const &avl)

@@ -12,8 +12,7 @@ class Node
         Node *right;
         int height;
 
-        Node(T &data){
-            this->data = data;
+        Node(const T &data):data(data){
             this->left = NULL;
             this->right = NULL;
             this->height = 1;

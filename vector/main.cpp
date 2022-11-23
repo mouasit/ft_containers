@@ -12,7 +12,6 @@ int main ()
   int myarray [] = { 501,502,503 };
   myvector.insert (myvector.begin(), myarray, myarray+3);
 
-it[0];
-
+  2 + it;
   return 0;
 }

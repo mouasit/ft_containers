@@ -64,7 +64,7 @@ namespace ft{
                 return copy;
             }
             
-            value_type& operator* () const{return *this->ptr;}
+            reference   operator* () const{return *this->ptr;}
             reference	operator[] (difference_type n) const{return (*(this->ptr + n));};
             pointer		operator->(void) const{return (this->_ptr);};
 

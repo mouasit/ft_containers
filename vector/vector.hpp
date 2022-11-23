@@ -6,6 +6,8 @@
 #include "../utils/reverse_iterator.hpp"
 #include "../utils/is_integral.hpp"
 #include "../utils/enable_if.hpp"
+#include "../utils/equal.hpp"
+#include "../utils/lexicographical_compare.hpp"
 /* ----------------------------- WARNING !!  ---------------------------------
 
     Issues should fix:
@@ -26,8 +28,11 @@ namespace ft{
             typedef size_t                                          size_type;
             typedef typename allocator_type::reference             reference;
             typedef typename allocator_type::const_reference       const_reference;
+	        typedef typename allocator_type::pointer			    pointer;
+	        typedef typename allocator_type::const_pointer			const_pointer;
+	        typedef ptrdiff_t								        difference_type;
             typedef typename ft::iterator<T>                        iterator;
-            typedef typename ft::iterator<const T>                  const_iterator;
+            typedef typename ft::iterator<T const>                  const_iterator;
             typedef typename ft::reverse_iterator<iterator>         reverse_iterator;
             typedef typename ft::reverse_iterator<const_iterator>   const_reverse_iterator;
 
@@ -340,6 +345,26 @@ namespace ft{
                 size_type _size;
                 size_type _capacity;
     };
+    
+    template<class T, class Alloc>
+    bool	operator==(vector<T,Alloc> const & lhs, vector<T,Alloc> const & rhs)
+    {
+        return ((lhs.size() == rhs.size()) && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+    };
+    template<class T, class Alloc>
+    bool	operator!=(vector<T,Alloc> const & lhs, vector<T,Alloc> const & rhs){return (!(lhs == rhs));};
+    template<class T, class Alloc>
+    bool	operator<(vector<T,Alloc> const & lhs, vector<T,Alloc> const & rhs)
+    {
+        return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+    };
+    template<class T, class Alloc>
+    bool	operator<=(vector<T,Alloc> const & lhs, vector<T,Alloc> const & rhs){return (!(rhs < lhs));};
+    template<class T, class Alloc>
+    bool	operator>(vector<T,Alloc> const & lhs, vector<T,Alloc> const & rhs){return (rhs < lhs);};
+    template<class T, class Alloc>
+    bool	operator>=(vector<T,Alloc> const & lhs, vector<T,Alloc> const & rhs){return (!(lhs < rhs));};
+
 }
 
 #endif

@@ -66,7 +66,7 @@ namespace ft{
             
             reference   operator* () const{return *this->ptr;}
             reference	operator[] (difference_type n) const{return (*(this->ptr + n));};
-            pointer		operator->(void) const{return (this->_ptr);};
+            pointer		operator->(void) const{return (this->ptr);};
 
 
             iterator&	operator+=(difference_type n){
@@ -74,7 +74,7 @@ namespace ft{
 	            return (*this);
             }
             iterator&	operator-=(difference_type n){
-                this->_ptr -= n;
+                this->ptr -= n;
 	            return (*this);
             }
 

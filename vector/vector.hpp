@@ -54,9 +54,9 @@ namespace ft{
             
             vector(vector  &x):_array(), _allocation(x._allocation), _size(x._size), _capacity(x._capacity){
                 	
-                    this->_array = this->_alloc.allocate(this->_size);
+                    this->_array = this->_allocation.allocate(this->_size);
 	                for (size_type i = 0; i < this->_size; i++) {
-		                this->_alloc.construct(this->_array + i, *(x._array + i));
+		                this->_allocation.construct(this->_array + i, *(x._array + i));
 	            }
             }
                 template< class InputIterator>
@@ -64,9 +64,9 @@ namespace ft{
                     :_array(), _allocation(alloc), _size(), _capacity()
                     {
                         this->_size = this->_capacity = std::distance(first, last);
-                        this->_array = this->_alloc.allocate(this->_capacity);
+                        this->_array = this->_allocation.allocate(this->_capacity);
                         for (size_type i = 0; first != last; ++first, ++i) {
-                            this->_alloc.construct(this->_array + i, *first);
+                            this->_allocation.construct(this->_array + i, *first);
                             }
 }
             ~vector(){};
@@ -76,11 +76,21 @@ namespace ft{
             iterator begin(){
                 value_type *it = &this->_array[0];
                 return(iterator(it));
-            }
-            
+            };
+
+            const_iterator begin()const{
+                value_type *it = &this->_array[0];
+                return(const_iterator(it));
+            };
+
             iterator end(){
                 value_type *it = &this->_array[this->_size];
                 return(iterator(it));
+            }
+            
+            const_iterator end()const{
+                value_type *it = &this->_array[this->_size];
+                return(const_iterator(it));
             }
 
             reverse_iterator rbegin(){
@@ -88,15 +98,25 @@ namespace ft{
                 return(reverse_iterator(it));
             }
             
+            const_reverse_iterator rbegin()const{
+                value_type *it = &this->_array[this->_size];
+                return(const_reverse_iterator(it));
+            }
+            
             reverse_iterator rend(){
                 value_type *it = &this->_array[0];
                 return(reverse_iterator(it));
+            }
+            
+            const_reverse_iterator rend() const{
+                value_type *it = &this->_array[0];
+                return(const_reverse_iterator(it));
             }
 
 
             // CAPACITY 
 
-            size_type size(){
+            size_type size() const{
                 return this->_size;
             }
             
@@ -207,6 +227,13 @@ namespace ft{
                 for (size_t i = 0; i < n; i++)
                     this->_allocation.construct(this->_array + i, val);
                 this->_size = n;
+            }
+
+            template<class InputIterator>
+	        void	assign(InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last)
+            {
+                (void)first;
+                (void)last;
             }
 
             void push_back (const value_type& val){
@@ -339,12 +366,23 @@ namespace ft{
                     range++;
                 return range;
             }
+
+	        allocator_type	get_allocator(void) const
+            {
+                return (this->_allocation);
+            }
             private:
                 value_type     *_array;
                 allocator_type  _allocation;
                 size_type _size;
                 size_type _capacity;
     };
+
+    template<class T, class Alloc>
+    void	swap(vector<T,Alloc>& x, vector<T,Alloc>& y)
+    {
+        x.swap(y);
+    }
     
     template<class T, class Alloc>
     bool	operator==(vector<T,Alloc> const & lhs, vector<T,Alloc> const & rhs)

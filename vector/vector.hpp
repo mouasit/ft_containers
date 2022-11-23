@@ -323,18 +323,38 @@ namespace ft{
                 
             }
 
+            iterator eraseHelper(size_type position, const size_type n)
+            {
+                size_type index = position;
+
+                while(index < this->_size)
+                {
+                    this->_allocation.destroy(this->_array + index);
+		            if (index + n < this->_size)
+			            this->_allocation.construct(this->_array + index, *(this->_array + index + n));
+                    index++;
+                }
+
+                this->_size -= n;
+                return (iterator(this->_array + position));
+            }
+
+
             iterator erase (iterator position){
-                _allocation.destroy(&(*position));
-                this->_size--;
-                return end() - 1;
+                size_type start_position = position - this->begin();
+               return eraseHelper(start_position,1);
             }
 
             iterator erase (iterator first, iterator last){
-                size_type range = get_range(first,last);
-                for (; first != last; first++)
-                    _allocation.destroy(&(*first));
-                this->_size -= range;
-                return last;
+	            const size_type		start_position = first - this->begin();
+                const size_type		n = last - first;
+
+	            return (eraseHelper(start_position, n));
+                // size_type range = get_range(first,last);
+                // for (; first != last; first++)
+                //     _allocation.destroy(&(*first));
+                // this->_size -= range;
+                // return last;
                 
             }
 

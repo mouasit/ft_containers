@@ -257,6 +257,8 @@ namespace ft{
 
             iterator insert (iterator position, const value_type& val){
 
+	            const size_type		start_position = position - this->begin();
+
                 if (this->capacity() == 0)
                 {
                     push_back(val);
@@ -290,7 +292,7 @@ namespace ft{
                         origin = tmp;
                     }
                 }
-                return position;
+                return (this->begin() + start_position);
                 }
             
             void insert (iterator position, size_type n, const value_type& val){

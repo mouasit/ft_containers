@@ -83,7 +83,7 @@ namespace ft{
     };
 
     template<class T>
-        iterator<T>	operator + ( typename iterator<T>::difference_type n, iterator<T> const & rhs)
+        iterator<T>	operator + (typename iterator<T>::difference_type n, iterator<T> const & rhs)
         {
 	        return (rhs + n);
         }

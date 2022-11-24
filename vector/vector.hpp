@@ -347,33 +347,53 @@ namespace ft{
             }
             
             void insert (iterator position, size_type n, const value_type& val){
-                
-                iterator it = this->begin();
-                size_t index = 0;
 
-                for (; it != position; it++)
-                    index++;
-                if (this->size() + n > this->_capacity * 2)
-                    this->reserve(this->size() + n);
-                for (size_t i = 0; i < n; i++)
-                    insert(this->begin() + index++, val);
+                	const size_type		pos_index = position - this->begin();
+
+	                this->make_places_to_new_elements(pos_index, n);
+	                for(size_type i = 0; i < n; i++) {
+		            this->_allocation.construct(this->_array + pos_index + i, val);
+	                }
+                
+                // iterator it = this->begin();
+                // size_t index = 0;
+
+                // for (; it != position; it++)
+                //     index++;
+                // if (this->size() + n > this->_capacity * 2)
+                //     this->reserve(this->size() + n);
+                // for (size_t i = 0; i < n; i++)
+                //     insert(this->begin() + index++, val);
             }
 
-            template <class InputIterator>
-            void insert (iterator position, InputIterator first, InputIterator last){
+	        template<class InputIterator>
+            void		insert(iterator position, InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last)
+            {
+                const size_type		pos_index = position - this->begin();
+	            const size_type		n = std::distance(first, last);
 
-                iterator it = this->begin();
-                size_t index = 0;
-                size_type range = get_range(first, last);
-                
-                for (; it != position; it++)
-                    index++;
-                if (this->size() + range > this->_capacity * 2)
-                    this->reserve(this->size() + range);
-                for (; first != last;first++)
-                    insert(this->begin() + index++, *first);
-                
+	            this->make_places_to_new_elements(pos_index, n);
+	            for(size_type i = 0; i < n; ++i, ++first)
+                {
+		            this->_allocation.construct(this->_array + pos_index + i, *first);
+	            }
             }
+
+            // template <class InputIterator>
+            // void insert (iterator position, InputIterator first, InputIterator last){
+
+            //     iterator it = this->begin();
+            //     size_t index = 0;
+            //     size_type range = get_range(first, last);
+                
+            //     for (; it != position; it++)
+            //         index++;
+            //     if (this->size() + range > this->_capacity * 2)
+            //         this->reserve(this->size() + range);
+            //     for (; first != last;first++)
+            //         insert(this->begin() + index++, *first);
+                
+            // }
 
             iterator eraseHelper(size_type position, const size_type n)
             {

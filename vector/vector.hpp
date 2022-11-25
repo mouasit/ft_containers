@@ -2,7 +2,7 @@
 #define vector_HPP
 
 #include <iostream>
-#include "iterator.hpp"
+#include "vector_iterator.hpp"
 #include "../utils/reverse_iterator.hpp"
 #include "../utils/is_integral.hpp"
 #include "../utils/enable_if.hpp"
@@ -31,8 +31,8 @@ namespace ft{
 	        typedef typename allocator_type::pointer			    pointer;
 	        typedef typename allocator_type::const_pointer			const_pointer;
 	        typedef ptrdiff_t								        difference_type;
-            typedef typename ft::iterator<T>                        iterator;
-            typedef typename ft::iterator<T const>                  const_iterator;
+            typedef typename ft::vector_iterator<T>                        iterator;
+            typedef typename ft::vector_iterator<T const>                  const_iterator;
             typedef typename ft::reverse_iterator<iterator>         reverse_iterator;
             typedef typename ft::reverse_iterator<const_iterator>   const_reverse_iterator;
 

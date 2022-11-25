@@ -6,7 +6,7 @@
 #include <functional>
 #include "../utils/pair.hpp"
 #include "../utils/avlTree.hpp"
-#include "../utils/iterators.hpp"
+#include "iterators.hpp"
 #include "../utils/reverse_iterator.hpp"
 #include "../utils/node.hpp"
 #include "../utils/lexicographical_compare.hpp"
@@ -31,7 +31,6 @@ namespace ft{
         typedef typename ft::const_iterator<value_type, node_type, avl>      const_iterator;
         typedef typename ft::reverse_iterator<iterator>                      reverse_iterator;
         typedef typename ft::reverse_iterator<const_iterator>                const_reverse_iterator;
-        typedef typename ft::iterator_traits<iterator>                       iterator_traits;
         typedef size_t                                                       size_type;
 
         avl                                                                  avl_inst;

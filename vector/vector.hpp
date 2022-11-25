@@ -32,7 +32,7 @@ namespace ft{
 	        typedef typename allocator_type::const_pointer			const_pointer;
 	        typedef ptrdiff_t								        difference_type;
             typedef typename ft::vector_iterator<T>                        iterator;
-            typedef typename ft::vector_iterator<T const>                  const_iterator;
+            typedef typename ft::const_vector_iterator<T>                  const_iterator;
             typedef typename ft::reverse_iterator<iterator>         reverse_iterator;
             typedef typename ft::reverse_iterator<const_iterator>   const_reverse_iterator;
 

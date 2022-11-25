@@ -297,37 +297,35 @@ namespace ft{
             
             void make_places_to_new_elements(const size_type pos_index, const size_type n)
             {
-	    // case1: without reallocation
-	    if ((this->_capacity - this->_size) >= n)
-	{
-	    for(long index = this->_size - 1; index >= (long)pos_index; index--)
-		{
-	    	this->_allocation.construct(this->_array + index + n, *(this->_array + index));
-	    	this->_allocation.destroy(this->_array + index);
-	    }
-	}
-	// case2: with reallocation
-	else
-	{
-		size_type	new_capacity = this->get_new_capacity(this->_size + n);
-		pointer		new_array = this->_allocation.allocate(new_capacity);
+                if ((this->_capacity - this->_size) >= n)
+                {
+                    for(long index = this->_size - 1; index >= (long)pos_index; index--)
+                    {
+                        this->_allocation.construct(this->_array + index + n, *(this->_array + index));
+	    	            this->_allocation.destroy(this->_array + index);
+	                }
+	            }
+	            else
+	            {
+		            size_type	new_capacity = this->get_new_capacity(this->_size + n);
+		            pointer		new_array = this->_allocation.allocate(new_capacity);
 		
-		for (size_type i = 0; i < pos_index; i++)
-		{
-			this->_allocation.construct(new_array + i, *(this->_array + i));
-			this->_allocation.destroy(this->_array + i);
-		}
-		for(size_type i = pos_index; i < this->_size; i++)
-		{
-			this->_allocation.construct(new_array + i + n, *(this->_array + i));
-			this->_allocation.destroy(this->_array + i);
-		}
-		this->_allocation.deallocate(this->_array, this->_capacity);
-		this->_array = new_array;
-		this->_capacity = new_capacity;
-	}
-	this->_size += n;
-}
+		            for (size_type i = 0; i < pos_index; i++)
+		            {
+			            this->_allocation.construct(new_array + i, *(this->_array + i));
+			            this->_allocation.destroy(this->_array + i);
+		            }
+		            for(size_type i = pos_index; i < this->_size; i++)
+		            {
+			            this->_allocation.construct(new_array + i + n, *(this->_array + i));
+			            this->_allocation.destroy(this->_array + i);
+		            }
+		            this->_allocation.deallocate(this->_array, this->_capacity);
+		            this->_array = new_array;
+		            this->_capacity = new_capacity;
+	            }
+	            this->_size += n;
+            }
 
             iterator insert (iterator position, const value_type& val)
             {
@@ -346,16 +344,7 @@ namespace ft{
 	                for(size_type i = 0; i < n; i++) {
 		            this->_allocation.construct(this->_array + pos_index + i, val);
 	                }
-                
-                // iterator it = this->begin();
-                // size_t index = 0;
 
-                // for (; it != position; it++)
-                //     index++;
-                // if (this->size() + n > this->_capacity * 2)
-                //     this->reserve(this->size() + n);
-                // for (size_t i = 0; i < n; i++)
-                //     insert(this->begin() + index++, val);
             }
 
 	        template<class InputIterator>
@@ -370,22 +359,6 @@ namespace ft{
 		            this->_allocation.construct(this->_array + pos_index + i, *first);
 	            }
             }
-
-            // template <class InputIterator>
-            // void insert (iterator position, InputIterator first, InputIterator last){
-
-            //     iterator it = this->begin();
-            //     size_t index = 0;
-            //     size_type range = get_range(first, last);
-                
-            //     for (; it != position; it++)
-            //         index++;
-            //     if (this->size() + range > this->_capacity * 2)
-            //         this->reserve(this->size() + range);
-            //     for (; first != last;first++)
-            //         insert(this->begin() + index++, *first);
-                
-            // }
 
             iterator eraseHelper(size_type position, const size_type n)
             {

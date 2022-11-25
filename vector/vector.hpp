@@ -54,7 +54,8 @@ namespace ft{
             
             template <class InputIterator>
 			vector (InputIterator first, InputIterator last,
-				typename ft::enable_if<!std::is_integral<InputIterator>::value, allocator_type>::type const alloc = allocator_type()): _array(), _allocation(alloc), _size(), _capacity()
+				typename ft::enable_if<!std::is_integral<InputIterator>::value, allocator_type>::type const alloc = allocator_type())
+                    : _array(), _allocation(alloc), _size(), _capacity()
             {
             	this->_size = this->_capacity = std::distance(first, last);
 
@@ -64,7 +65,7 @@ namespace ft{
             	}
             }
             
-            vector(vector  &x):_array(), _allocation(x._allocation), _size(x._size), _capacity(x._capacity){
+            vector(const vector  &x):_array(), _allocation(x._allocation), _size(x._size), _capacity(x._capacity){
                 	
                     this->_array = this->_allocation.allocate(this->_size);
 	                for (size_type i = 0; i < this->_size; i++) 

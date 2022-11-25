@@ -13,8 +13,10 @@ namespace ft
 			typedef Container   container_type;
 			typedef size_t      size_type;
 
+        protected:
             container_type      container;
 
+        public:
             explicit stack (const container_type& ctnr = container_type()):container(ctnr){};
         
             stack(stack const & rhs) : container(rhs.container) {}

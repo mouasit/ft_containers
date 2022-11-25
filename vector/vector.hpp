@@ -8,19 +8,10 @@
 #include "../utils/enable_if.hpp"
 #include "../utils/equal.hpp"
 #include "../utils/lexicographical_compare.hpp"
-/* ----------------------------- WARNING !!  ---------------------------------
-
-    Issues should fix:
-
-    - operator = : between iterartors / const_iterator = iterarot
-    - return position in .insert()
-    - insert(position, first, last): first and last "numbers"
-    
-*/
 
 namespace ft{
     
-    template <typename T, typename Alloc = std::allocator<T> >
+    template <class T, class Alloc = std::allocator<T> >
     class vector{
         public:
             typedef T                                               value_type;

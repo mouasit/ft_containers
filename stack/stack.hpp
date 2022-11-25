@@ -57,7 +57,53 @@ namespace ft
             {
                 container.pop_back();
             }
+        private:
+            template <class t, class container>
+                friend bool operator== (const stack<t,container>& lhs, const stack<t,container>& rhs);
+            template <class t, class container>
+                friend bool operator!= (const stack<t,container>& lhs, const stack<t,container>& rhs);
+            template <class t, class container>
+                friend bool operator<  (const stack<t,container>& lhs, const stack<t,container>& rhs);
+            template <class t, class container>
+                friend bool operator<= (const stack<t,container>& lhs, const stack<t,container>& rhs);;
+            template <class t, class container>
+                friend bool operator>  (const stack<t,container>& lhs, const stack<t,container>& rhs);
+            template <class t, class container>
+                friend bool operator>=  (const stack<t,container>& lhs, const stack<t,container>& rhs);
     };
+
+    template <class t, class container>
+    bool operator== (const stack<t,container>& lhs, const stack<t,container>& rhs)
+    {
+        return lhs.container == rhs.container;
+    }
+
+	template <class t, class container>
+    bool operator!= (const stack<t,container>& lhs, const stack<t,container>& rhs)
+    {
+        return lhs.container != rhs.container;
+    }
+    
+	template <class t, class container>
+    bool operator<  (const stack<t,container>& lhs, const stack<t,container>& rhs)
+    {
+        return lhs.container < rhs.container;
+    }
+	template <class t, class container>
+    bool operator<= (const stack<t,container>& lhs, const stack<t,container>& rhs)
+    {
+        return lhs.container <= rhs.container;
+    }
+	template <class t, class container>
+    bool operator>  (const stack<t,container>& lhs, const stack<t,container>& rhs)
+    {
+        return lhs.container > rhs.container;
+    }
+	template <class t, class container>
+    bool operator>=  (const stack<t,container>& lhs, const stack<t,container>& rhs)
+    {
+        return lhs.container >= rhs.container;
+    }
 }
 
 #endif 

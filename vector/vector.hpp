@@ -87,7 +87,7 @@ namespace ft{
         return (*this);
     }
 
-            // ITERATOR
+            // ITERATORS
 
             iterator begin(){
                 value_type *it = &this->_array[0];
@@ -286,77 +286,76 @@ namespace ft{
                 this->_size--;
             }
 
-            size_type get_new_capacity(size_type n)
+            size_type get_capacity(size_type n)
             {
-	            const size_type		new_capacity = this->_capacity * 2;
+	            const size_type		updateCapacity = this->_capacity * 2;
 	
-	            if (new_capacity < n)
+	            if (updateCapacity < n)
 		            return (n);
-	            return (new_capacity);
+	            return (updateCapacity);
             }
             
-            void make_places_to_new_elements(const size_type pos_index, const size_type n)
+            void right_shift(const size_type start_position, const size_type n)
             {
                 if ((this->_capacity - this->_size) >= n)
                 {
-                    for(long index = this->_size - 1; index >= (long)pos_index; index--)
+                    for(size_type i = this->_size - 1; i >= start_position; i--)
                     {
-                        this->_allocation.construct(this->_array + index + n, *(this->_array + index));
-	    	            this->_allocation.destroy(this->_array + index);
+                        this->_allocation.construct(this->_array + i + n, *(this->_array + i));
+	    	            this->_allocation.destroy(this->_array + i);
 	                }
 	            }
 	            else
 	            {
-		            size_type	new_capacity = this->get_new_capacity(this->_size + n);
-		            pointer		new_array = this->_allocation.allocate(new_capacity);
+		            size_type	updateCapacity = this->get_capacity(this->_size + n);
+		            pointer		updateArray = this->_allocation.allocate(updateCapacity);
 		
-		            for (size_type i = 0; i < pos_index; i++)
+		            for (size_type i = 0; i < start_position; i++)
 		            {
-			            this->_allocation.construct(new_array + i, *(this->_array + i));
+			            this->_allocation.construct(updateArray + i, *(this->_array + i));
 			            this->_allocation.destroy(this->_array + i);
 		            }
-		            for(size_type i = pos_index; i < this->_size; i++)
+		            for(size_type i = start_position; i < this->_size; i++)
 		            {
-			            this->_allocation.construct(new_array + i + n, *(this->_array + i));
+			            this->_allocation.construct(updateArray + i + n, *(this->_array + i));
 			            this->_allocation.destroy(this->_array + i);
 		            }
 		            this->_allocation.deallocate(this->_array, this->_capacity);
-		            this->_array = new_array;
-		            this->_capacity = new_capacity;
+		            this->_array = updateArray;
+		            this->_capacity = updateCapacity;
 	            }
 	            this->_size += n;
             }
 
             iterator insert (iterator position, const value_type& val)
             {
-                const size_type		pos_index = position - this->begin();
+                const size_type		start_position = position - this->begin();
 
-	            this->make_places_to_new_elements(pos_index, 1);
-	            this->_allocation.construct(this->_array + pos_index, val);
-	            return (this->begin() + pos_index);
+                this->right_shift(start_position,1);
+	            this->_allocation.construct(this->_array + start_position, val);
+	            return (this->begin() + start_position);
             }
             
             void insert (iterator position, size_type n, const value_type& val){
 
-                	const size_type		pos_index = position - this->begin();
+                const size_type		start_position = position - this->begin();
 
-	                this->make_places_to_new_elements(pos_index, n);
-	                for(size_type i = 0; i < n; i++) {
-		            this->_allocation.construct(this->_array + pos_index + i, val);
-	                }
-
+                this->right_shift(start_position,n);
+	            for(size_type i = 0; i < n; i++) {
+		                this->_allocation.construct(this->_array + start_position + i, val);
+	            }
             }
 
 	        template<class InputIterator>
             void		insert(iterator position, InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last)
             {
-                const size_type		pos_index = position - this->begin();
+                const size_type		start_position = position - this->begin();
 	            const size_type		n = std::distance(first, last);
 
-	            this->make_places_to_new_elements(pos_index, n);
+	            this->right_shift(start_position, n);
 	            for(size_type i = 0; i < n; ++i, ++first)
                 {
-		            this->_allocation.construct(this->_array + pos_index + i, *first);
+		            this->_allocation.construct(this->_array + start_position + i, *first);
 	            }
             }
 

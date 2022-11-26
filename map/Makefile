@@ -1,7 +1,8 @@
 NAME = map
 
 SRC =  main.cpp
-HEADER = ../utils/pair.hpp\
+HEADER = map.hpp \
+		 ../utils/pair.hpp\
 		 ../utils/avlTree.hpp\
 		 iterators.hpp\
 		 ../utils/reverse_iterator.hpp\

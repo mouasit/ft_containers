@@ -337,6 +337,5 @@ bool	operator>=(map<Key, T, Comp, Alloc> const & lhs, map<Key, T, Comp, Alloc> c
 	return (!(lhs < rhs));
 }
 
-
 }
 #endif

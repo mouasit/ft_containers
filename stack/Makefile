@@ -1,12 +1,13 @@
 NAME = stack
 
 SRC =  main.cpp
-HEADER = ../vector/vector.hpp
+HEADER = stack.hpp\
+		 ../vector/vector.hpp
 
 all : $(NAME)
 
 $(NAME): $(SRC) $(HEADER)
-	@c++  -Wall -Wextra -Werror -std=c++98  -fsanitize=address -g $(SRC) -o $(NAME)
+	@c++  -Wall -Wextra -Werror -std=c++98  $(SRC) -o $(NAME)
 	
 clean:
 	@rm -rf $(NAME)
